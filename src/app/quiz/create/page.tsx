@@ -81,12 +81,11 @@ const Create = () => {
         <label htmlFor="numSelect">選択肢の数</label>
         <select
           id="numSelect"
+          value={numSelect}
           onChange={(e) => setNumSelect(Number(e.currentTarget.value))} //型変換（as numberだと型をみなすだけで実際に変換しないので危険）
         >
           <option value="2">2</option>
-          <option value="4" selected>
-            4
-          </option>
+          <option value="4">4</option>
           <option value="6">6</option>
         </select>
 
