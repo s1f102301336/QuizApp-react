@@ -22,7 +22,7 @@ const Create = () => {
     }>;
     description: string;
     explanation: string;
-    id: number;
+    date: number;
     question: string;
     title: string;
   }
@@ -49,7 +49,7 @@ const Create = () => {
       choices,
       description: quizData.description as string,
       explanation: quizData.explanation as string,
-      id: Date.now(), //1970年始からのミリ単位秒
+      date: Date.now(), //1970年始からのミリ単位秒
       question: quizData.question as string,
       title: quizData.title as string,
     };
@@ -81,7 +81,7 @@ const Create = () => {
         <label htmlFor="numSelect">選択肢の数</label>
         <select
           id="numSelect"
-          value={numSelect}
+          value={numSelect} //selectのデフォルト値をstate流用
           onChange={(e) => setNumSelect(Number(e.currentTarget.value))} //型変換（as numberだと型をみなすだけで実際に変換しないので危険）
         >
           <option value="2">2</option>
@@ -93,18 +93,14 @@ const Create = () => {
           //選択肢の数だけ入力欄を用意
           //jsxではforEachなので空配列の長さを用いてrange
           [...Array(numSelect)].map((_, i) => (
-            <div key={i + 1}>
-              <label htmlFor={`choice${i + 1}`}>選択肢{i + 1}</label>
+            <div key={i}>
+              <label htmlFor={`choice${i}`}>選択肢{i + 1}</label>
               <input
                 type="checkbox"
-                id={`isCorrect${i + 1}`}
-                name={`isCorrect${i + 1}`}
+                id={`isCorrect${i}`}
+                name={`isCorrect${i}`}
               />
-              <input
-                type="text"
-                id={`choice${i + 1}`}
-                name={`choice${i + 1}`}
-              />
+              <input type="text" id={`choice${i}`} name={`choice${i}`} />
             </div>
           ))
         }
