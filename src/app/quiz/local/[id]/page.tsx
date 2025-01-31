@@ -5,15 +5,20 @@ import { Quiz } from "@/interface/Quiz";
 import { doc, getDoc } from "firebase/firestore";
 import { Header } from "@/components/Header";
 import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
 //ディレクトリが[id]の際、{params}:{params:{id:string}}でパラメータを取得可能
-interface Props {
-  params: {
-    id: string;
-  };
-}
+// interface Props {
+//   params: {
+//     id: string;
+//   };
+// }
 
-const Local = ({ params }: Props) => {
+//useParams()で非同期取得仕様に変更された
+const Local = () => {
+  const params = useParams();
+  const quizId = params.id as string;
+
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   //[number]により、Array<>のなかの型を参照
   const [answer, setAnswer] = useState<
@@ -28,7 +33,7 @@ const Local = ({ params }: Props) => {
   try {
     useEffect(() => {
       const fetchQuiz = async () => {
-        const docRef = doc(db, "quizzes", params.id); //ドキュメントへの参照を作成
+        const docRef = doc(db, "quizzes", quizId); //ドキュメントへの参照を作成
         const docSnap = await getDoc(docRef); //参照をもとにデータを取得
 
         if (!docSnap.exists()) {
@@ -40,16 +45,17 @@ const Local = ({ params }: Props) => {
         console.log(docSnap.data()); //中身のオブジェクトを返す
       };
       fetchQuiz();
-    }, [params]);
+    }, [quizId]);
 
     return (
       <div>
         <Header />
         {quiz && (
           <div>
-            <div>{quiz.title}</div>
             <div>{quiz.category}</div>
+            <div>{quiz.title}</div>
             <div>{quiz.description}</div>
+            <div>{quiz.question}</div>
             <ul>
               {quiz.choices.map((c, i) => (
                 <div key={i}>
@@ -59,7 +65,12 @@ const Local = ({ params }: Props) => {
                 </div>
               ))}
             </ul>
-            <div>{answer !== null && (answer ? "正解" : "不正解")}</div>
+            {answer !== null && (
+              <div>
+                <div>{answer ? "正解" : "不正解"}</div>
+                <div>{quiz.explanation}</div>
+              </div>
+            )}
           </div>
         )}
       </div>
