@@ -1,21 +1,19 @@
 import React from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "@/firebase";
 import Link from "next/link";
+import { Quiz } from "@/interface/Quiz";
 
-interface Quiz {
-  id: string;
-  title: string;
-  description: string;
-}
+//OmitでimportしたQuizを再利用できるかも
 
 export const DisplayQuizzes = async () => {
   const snapshot = await getDocs(collection(db, "quizzes"));
   const quizzes = snapshot.docs.map(
     (doc) => ({
       id: doc.id,
-      ...(doc.data() as Omit<Quiz, "id">),
+      ...(doc.data() as Quiz), //titleとdescriptionだけ
     })
+    //id属性は設定してないが、ランダム値が自動生成され設定される
     // => ({}) でjsブロックではなく、オブジェクトであることを明記
   );
 

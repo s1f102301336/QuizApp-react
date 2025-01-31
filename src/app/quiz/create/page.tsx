@@ -3,30 +3,9 @@
 import { useState } from "react";
 import { db } from "../../../firebase";
 import { addDoc, collection } from "firebase/firestore";
+import { Quiz } from "@/interface/Quiz";
 
 const Create = () => {
-  interface Quiz {
-    category:
-      | "Anime/Manga"
-      | "Games"
-      | "Music"
-      | "History"
-      | "Math"
-      | "Science"
-      | "Literature"
-      | "Other";
-    //配列の中身が複数になる場合、Array<>で囲う
-    choices: Array<{
-      isCorrect: boolean;
-      text: string;
-    }>;
-    description: string;
-    explanation: string;
-    date: number;
-    question: string;
-    title: string;
-  }
-
   const [numSelect, setNumSelect] = useState<number>(4);
 
   const SubmitQuiz = async (e: React.FormEvent<HTMLFormElement>) => {
