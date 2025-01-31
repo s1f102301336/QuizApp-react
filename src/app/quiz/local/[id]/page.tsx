@@ -30,9 +30,9 @@ const Local = () => {
   //   return
   // };
 
-  try {
-    useEffect(() => {
-      const fetchQuiz = async () => {
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try {
         const docRef = doc(db, "quizzes", quizId); //ドキュメントへの参照を作成
         const docSnap = await getDoc(docRef); //参照をもとにデータを取得
 
@@ -40,44 +40,43 @@ const Local = () => {
           console.error("Quiz not found");
           return <div>クイズが見つかりません</div>;
         }
+
         setQuiz(docSnap.data() as Quiz);
 
         console.log(docSnap.data()); //中身のオブジェクトを返す
-      };
-      fetchQuiz();
-    }, [quizId]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchQuiz();
+  }, [quizId]);
 
-    return (
-      <div>
-        <Header />
-        {quiz && (
-          <div>
-            <div>{quiz.category}</div>
-            <div>{quiz.title}</div>
-            <div>{quiz.description}</div>
-            <div>{quiz.question}</div>
-            <ul>
-              {quiz.choices.map((c, i) => (
-                <div key={i}>
-                  <button onClick={() => setAnswer(c.isCorrect)}>
-                    {c.text}
-                  </button>
-                </div>
-              ))}
-            </ul>
-            {answer !== null && (
-              <div>
-                <div>{answer ? "正解" : "不正解"}</div>
-                <div>{quiz.explanation}</div>
+  return (
+    <div>
+      <Header />
+      {quiz && (
+        <div>
+          <div>{quiz.category}</div>
+          <div>{quiz.title}</div>
+          <div>{quiz.description}</div>
+          <div>{quiz.question}</div>
+          <ul>
+            {quiz.choices.map((c, i) => (
+              <div key={i}>
+                <button onClick={() => setAnswer(c.isCorrect)}>{c.text}</button>
               </div>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  } catch (error) {
-    console.error("Error", error);
-  }
+            ))}
+          </ul>
+          {answer !== null && (
+            <div>
+              <div>{answer ? "正解" : "不正解"}</div>
+              <div>{quiz.explanation}</div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Local;

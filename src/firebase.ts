@@ -11,6 +11,9 @@ import { getDatabase } from "firebase/database";
 const firebaseConfig = {
   apiKey: "AIzaSyB5JsAepGS5Zw8ggVUV4sEYEB1CLFLk_qQ",
   authDomain: "react-quiz-app-353d4.firebaseapp.com",
+  databaseURL:
+    "https://react-quiz-app-353d4-default-rtdb.asia-southeast1.firebasedatabase.app", // ← ここを修正
+
   projectId: "react-quiz-app-353d4",
   storageBucket: "react-quiz-app-353d4.firebasestorage.app",
   messagingSenderId: "927774549194",
@@ -20,8 +23,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const rtdb = getDatabase(app); //RealTimeDB-info
-const db = getFirestore(app); //db-info
+const rtdb = getDatabase(app); //RealTimeDB-info (パスで構成されるツリー構造)
+const db = getFirestore(app); //db-info (コレクション＞ドキュメント＞フィールドの構成)
 const auth = getAuth(app); //boolean
 
 export { rtdb, db, auth };

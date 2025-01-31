@@ -9,30 +9,28 @@ import { Start } from "./Start";
 
 const Multiplayer = () => {
   const params = useParams();
-  const roomId = params.id as string;
-  const dbRef = ref(rtdb, "rooms/" + roomId); //roomsコレクションのもとにroomIdドキュメントを作成
-
   const [ready, setReady] = useState(false);
-  console.log("s", dbRef);
-  console.log("d", roomId);
 
-  try {
-    useEffect(() => {
-      console.log("Hello");
+  useEffect(() => {
+    const roomId = params.id as string;
+    const dbRef = ref(rtdb, `rooms/${roomId}`); //roomsコレクションのもとにroomIdドキュメントを作成
+    console.log("Hello");
 
-      const createRoom = async () => {
+    const createRoom = async () => {
+      try {
         const roomSnapshot = await get(dbRef);
-        console.log("Hello");
+        console.log(roomSnapshot.val());
+        console.log("Hello2");
         if (!roomSnapshot.exists()) {
           //フィールド値を作成
-          set(dbRef, {
+          await set(dbRef, {
             roomId: roomId,
             user1: {
               id: 1234,
               name: "Taro",
             },
           });
-          console.log("data", roomSnapshot);
+          console.log("data", roomSnapshot.val());
         } else {
           const newUser = {
             user2: {
@@ -40,27 +38,27 @@ const Multiplayer = () => {
               name: "John",
             },
           };
-          update(dbRef, newUser);
+          await update(dbRef, newUser);
           setReady(true);
-          console.log("data", roomSnapshot);
+          console.log("data", roomSnapshot.val());
         }
-      };
-      createRoom();
-    }, [dbRef, roomId]);
+      } catch (error) {
+        console.error("Error", error);
+      }
+    };
+    createRoom();
+  }, [params.id]);
 
-    return (
-      <div>
-        <Header />
-        {ready && (
-          <div>
-            <Start />
-          </div>
-        )}
-      </div>
-    );
-  } catch (error) {
-    console.error("Error", error);
-  }
+  return (
+    <div>
+      <Header />
+      {ready && (
+        <div>
+          <Start />
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Multiplayer;
