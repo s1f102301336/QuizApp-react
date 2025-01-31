@@ -22,11 +22,22 @@ export const DisplayQuizzes = async () => {
   return (
     <div>
       <div>DisplayQuizzes</div>
+      {
+        //とりあえず1問だけ
+        <div key={quizzes[0].id}>
+          クイズマッチ
+          <div>{quizzes[0].title}</div>
+          <div>{quizzes[0].description}</div>
+          <Link href={`./quiz/multiplayer/${quizzes[0].id}`}>
+            <button>入室</button>
+          </Link>
+        </div>
+      }
       {quizzes.map((quiz) => (
         <div key={quiz.id}>
+          シングルマッチ
           <div>{quiz.title}</div>
           <div>{quiz.description}</div>
-
           <Link href={`./quiz/local/${quiz.id}`}>
             <button>入室</button>
           </Link>
