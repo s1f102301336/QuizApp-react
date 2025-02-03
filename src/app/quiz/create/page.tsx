@@ -42,7 +42,7 @@ const Create = () => {
         <label htmlFor="category">カテゴリ</label>
         <select id="category" name="category">
           <option value="">選択してください</option>
-          <option value="Anime/Manga">アニメ/漫画</option>
+          <option value="Anime_Manga">アニメ/漫画</option>
           <option value="Games">ゲーム</option>
           <option value="Music">音楽</option>
           <option value="History">歴史</option>

@@ -2,7 +2,6 @@
 import { Header } from "@/components/Header";
 import styles from "../styles/page.module.css";
 import { Search } from "./Search";
-import { DisplayQuizzes } from "./DisplayQuizzes";
 
 export default function Home() {
   return (
@@ -12,7 +11,6 @@ export default function Home() {
       </header>
       <main className={styles.main}>
         <Search />
-        <DisplayQuizzes />
       </main>
       <footer className={styles.footer}></footer>
     </div>

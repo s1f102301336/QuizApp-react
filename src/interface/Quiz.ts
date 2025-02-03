@@ -1,6 +1,6 @@
 interface Quiz {
   category:
-    | "Anime/Manga"
+    | "Anime_Manga"
     | "Games"
     | "Music"
     | "History"

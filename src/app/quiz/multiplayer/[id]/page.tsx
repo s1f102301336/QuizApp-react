@@ -15,10 +15,11 @@ import {
 import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
 import { Start } from "./Start";
+import Link from "next/link";
 
 const Multiplayer = () => {
   const params = useParams();
-  const roomId = params.id as string;
+  const roomId = params.id as string; //categoryでカテゴリ名が渡される
   const [roomData, setRoomData] = useState(null);
 
   const ready = roomData && "user2" in roomData;
@@ -90,13 +91,16 @@ const Multiplayer = () => {
       </div>
       {ready && (
         <div>
-          <Start />
+          <Start category={roomId} />
         </div>
       )}
 
       <div>
         <button onClick={delDoc}>部屋を解散する</button>
       </div>
+      <Link href="/">
+        <button>ホームに戻る</button>
+      </Link>
     </div>
   );
 };
