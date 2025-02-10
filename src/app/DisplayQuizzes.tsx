@@ -3,12 +3,9 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase";
 import Link from "next/link";
 import { Quiz } from "@/interface/Quiz";
+import { QuizWithId } from "@/interface/QuizQithId";
 
 //OmitでimportしたQuizを再利用できるかも
-
-interface QuizWithId extends Quiz {
-  id: string;
-}
 
 export const DisplayQuizzes = (props: { filter: string }) => {
   const [quizzes, setQuizzes] = useState<QuizWithId[]>([]);
@@ -49,6 +46,7 @@ export const DisplayQuizzes = (props: { filter: string }) => {
             シングルマッチ
             <div>{quiz.title}</div>
             <div>{quiz.description}</div>
+            {/* Localではランダム値idで識別 */}
             <Link href={`./quiz/local/${quiz.id}`}>
               <button>入室</button>
             </Link>

@@ -21,6 +21,7 @@ const Multiplayer = () => {
   const params = useParams();
   const roomId = params.id as string; //categoryでカテゴリ名が渡される
   const [roomData, setRoomData] = useState(null);
+  const [yourId, setYourId] = useState<string>("");
 
   const ready = roomData && "user2" in roomData;
 
@@ -44,8 +45,10 @@ const Multiplayer = () => {
               name: "Taro",
             },
           });
+          setYourId("user1");
           console.log("data", (await get(roomRef)).val());
         } else {
+          //2人目の場合
           const newUser = {
             user2: {
               id: 2345,
@@ -53,6 +56,7 @@ const Multiplayer = () => {
             },
           };
           await update(roomRef, newUser);
+          setYourId("user2");
           console.log("data", (await get(roomRef)).val());
         }
       } catch (error) {
@@ -91,7 +95,7 @@ const Multiplayer = () => {
       </div>
       {ready && (
         <div>
-          <Start category={roomId} />
+          <Start category={roomId} userId={yourId} />
         </div>
       )}
 
