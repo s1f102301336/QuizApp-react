@@ -5,17 +5,17 @@ import Link from "next/link";
 import { DisplayQuizzes } from "./DisplayQuizzes";
 
 export const Search = () => {
-  const [filter, setFilter] = useState("");
+  const [category, setCategory] = useState("");
   return (
     <div>
       Search
       <div>
         <div>
           <select
-            name="filter"
-            id="filter"
-            value={filter}
-            onChange={(e) => setFilter(String(e.currentTarget.value))}
+            name="category"
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(String(e.currentTarget.value))}
           >
             <option value="ALL">ALL</option>
             <option value="Anime_Manga">アニメ/漫画</option>
@@ -30,7 +30,7 @@ export const Search = () => {
         </div>
         <Link href="./quiz/create">クイズ作成はこちら</Link>
       </div>
-      <DisplayQuizzes filter={filter} />
+      <DisplayQuizzes category={category} />
     </div>
   );
 };

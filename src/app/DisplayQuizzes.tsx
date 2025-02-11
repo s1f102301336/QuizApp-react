@@ -7,7 +7,7 @@ import { QuizWithId } from "@/interface/QuizQithId";
 
 //OmitでimportしたQuizを再利用できるかも
 
-export const DisplayQuizzes = (props: { filter: string }) => {
+export const DisplayQuizzes = ({ category }: { category: string }) => {
   const [quizzes, setQuizzes] = useState<QuizWithId[]>([]);
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -23,7 +23,7 @@ export const DisplayQuizzes = (props: { filter: string }) => {
       setQuizzes(quizzesData);
     };
     fetchQuizzes();
-  }, [props.filter]);
+  }, [category]);
 
   console.log("Q", quizzes);
   return (
@@ -33,14 +33,14 @@ export const DisplayQuizzes = (props: { filter: string }) => {
         //とりあえず1問だけ
         <div>
           <div>クイズマッチ</div>
-          <div>カテゴリ：{props.filter}</div>
-          <Link href={`./quiz/multiplayer/${props.filter}`}>
+          <div>カテゴリ：{category}</div>
+          <Link href={`./quiz/multiplayer/${category}`}>
             <button>入室</button>
           </Link>
         </div>
       }
       {quizzes
-        .filter((q) => props.filter === "ALL" || q.category === props.filter)
+        .filter((q) => category === "ALL" || q.category === category)
         .map((quiz) => (
           <div key={quiz.id}>
             シングルマッチ

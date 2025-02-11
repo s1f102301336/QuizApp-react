@@ -1,90 +1,22 @@
 "use client";
 
-import { db, rtdb } from "@/firebase";
+import { rtdb } from "@/firebase";
 import { Quiz } from "@/interface/Quiz";
-import { get, push, ref, update } from "firebase/database";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { get, push, ref } from "firebase/database";
+import React, { useState } from "react";
 
-export const Start = ({
-  category,
-  userId,
-}: {
+interface Room {
   category: string;
   userId: string;
-}) => {
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
-  const [quizNum, setQuizNum] = useState<number | null>(null);
-  const [quizOrder, setQuizOrder] = useState<number[]>([]);
+  quizzes: Quiz[];
+}
+
+export const Start = ({ category, userId, quizzes }: Room) => {
+  const [quizNum, setQuizNum] = useState<number>(0);
+
   const [ansList, setAnsList] = useState<
     { choiceText: string; choiceCorrect: boolean }[]
   >([]);
-
-  useEffect(() => {
-    const roomRef = ref(rtdb, `rooms/${category}`);
-
-    const getQuiz = async () => {
-      try {
-        const quizRef = collection(db, "quizzes");
-        const q =
-          category !== "ALL"
-            ? query(quizRef, where("category", "==", category))
-            : query(quizRef);
-
-        const snapshot = await getDocs(q);
-
-        const quizzesData = snapshot.docs.map((doc) => ({
-          ...(doc.data() as Quiz),
-        }));
-
-        console.log("quizzes", quizzesData);
-        console.log("user:", userId);
-
-        //ランダム順の添え字配列を作成
-        if (userId === "user1") {
-          const rdmOrder = [...Array(quizzesData.length)]
-            .map((_, i) => i)
-            .toSorted(() => Math.random() - Math.random());
-
-          console.log("rdmOrder", rdmOrder);
-
-          //クイズの順番を共有
-          await update(roomRef, { rdmOrder });
-        }
-        //2番目の人が追い越してしまうので待つ
-
-        setQuizzes(quizzesData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const createAnsList = async () => {
-      try {
-        const userAns = {
-          [`ans_${userId}`]: [],
-        };
-        await update(roomRef, userAns);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    const getRdmOder = async () => {
-      const Rdm = await get(ref(rtdb, `rooms/${category}/rdmOrder`));
-      console.log("Rdm", Rdm);
-
-      if (Rdm.exists()) {
-        setQuizOrder(Rdm.val());
-      }
-    };
-
-    getQuiz();
-    createAnsList();
-    getRdmOder();
-
-    setQuizNum(0);
-  }, [category, userId]);
 
   const userAnswer = async (c: Quiz["choices"][number]) => {
     const ansRef = ref(rtdb, `rooms/${category}/ans_${userId}`);
@@ -98,28 +30,23 @@ export const Start = ({
     } catch (error) {
       console.error(error);
     }
+    console.log("nowRoomData", (await get(ansRef)).val());
   };
 
   const changeQuiz = () => {
     //添え字は0から始まるため、次のクイズが存在する場合のみ実行
-    if (quizNum !== null && quizNum < quizzes.length - 1) {
-      setQuizNum((prev) => (prev !== null ? prev + 1 : 0));
+    if (quizNum < quizzes.length - 1) {
+      setQuizNum((prev) => prev + 1);
     } else {
       return; //endQuizを作っても良い
     }
   };
 
   console.log("quizNum", quizNum);
-  console.log("quizOrder", quizOrder);
   console.log("ansList", ansList);
 
   const nowQuiz =
-    quizNum !== null &&
-    quizOrder.length > 0 &&
-    quizzes.length > 0 &&
-    quizNum < quizzes.length
-      ? quizzes[quizOrder[quizNum]] ?? null
-      : null;
+    quizzes.length > 0 && quizNum < quizzes.length ? quizzes[quizNum] : null;
 
   console.log("nowQuiz", nowQuiz);
 
