@@ -4,16 +4,8 @@ import { rtdb } from "@/firebase";
 import { Quiz } from "@/interface/Quiz";
 import { get, push, ref } from "firebase/database";
 import React, { useState } from "react";
-
-interface RoomData {
-  roomId: string;
-  user1?: { id: number; name: string };
-  user2?: { id: number; name: string };
-  quizzesData?: Quiz[];
-  ans_user1?: object;
-  ans_user2?: object;
-  [key: `ans_user${number}`]: object | undefined;
-}
+import { Results } from "./Results";
+import { RoomData } from "@/interface/RoomData";
 
 interface Room {
   category: string;
@@ -134,7 +126,10 @@ export const Start = ({ category, userId, quizzes, roomData }: Room) => {
             )}
           </div>
         ) : (
-          <div>リザルト画面です</div>
+          <div>
+            リザルト画面です
+            <Results userId={userId} roomData={roomData} />
+          </div>
         )
       ) : (
         <p>クイズが見つかりません</p>
