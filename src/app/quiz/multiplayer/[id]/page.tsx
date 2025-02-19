@@ -158,7 +158,7 @@ const Multiplayer = () => {
         <button onClick={delDoc}>部屋を解散する</button>
       </div>
       <Link href="/">
-        <button>ホームに戻る</button>
+        <button onClick={delDoc}>ホームに戻る</button>
       </Link>
     </div>
   );

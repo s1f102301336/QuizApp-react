@@ -30,7 +30,14 @@ export const Start = ({ category, userId, quizzes, roomData }: Room) => {
   >([]);
   console.log("roomData", roomData);
 
-  const userAnswer = async (c: Quiz["choices"][number]) => {
+  const [nowChoice, setNowChoice] = useState<string | null>(null);
+
+  const userAnswer = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    c: Quiz["choices"][number]
+  ) => {
+    const currentId = e.currentTarget.id;
+    disable(currentId);
     const ansRef = ref(rtdb, `rooms/${category}/ans_user${userId}`);
     const answer = {
       choiceText: c.text,
@@ -46,9 +53,16 @@ export const Start = ({ category, userId, quizzes, roomData }: Room) => {
     console.log("realRoomData", roomData);
   };
 
+  const disable = (currentId: string) => {
+    //query...はNodeList、getElement...はHTMLCollectionを返すので、配列操作をするなら前者が良い！
+    setNowChoice(currentId);
+    console.log("disabledしてみた", currentId);
+  };
+
   const changeQuiz = () => {
     //添え字は0から始まるため、次のクイズが存在する場合のみ実行
-    if (quizNum < quizzes.length - 1) {
+    setNowChoice(null);
+    if (!gameSet) {
       setQuizNum((prev) => prev + 1);
     } else {
       return; //endQuizを作っても良い
@@ -66,6 +80,10 @@ export const Start = ({ category, userId, quizzes, roomData }: Room) => {
   const oppAns = roomData?.[`ans_user${3 - userId}`];
   const oppAnsList = oppAns ? Object.values(oppAns) : [];
 
+  const preGameSet = quizNum >= quizzes.length - 2;
+  const gameSet = quizNum >= quizzes.length - 1;
+  console.log("gameSet", gameSet);
+
   console.log("nowQuiz", nowQuiz);
 
   return (
@@ -73,39 +91,54 @@ export const Start = ({ category, userId, quizzes, roomData }: Room) => {
       <div>Start</div>
 
       {nowQuiz !== null ? (
-        <div>
-          <div>{nowQuiz.category}</div>
-          <div>{nowQuiz.title}</div>
-          <div>{nowQuiz.description}</div>
-          <div>{nowQuiz.question}</div>
-          <ul>
-            {nowQuiz.choices.map((c, j) => (
-              <div key={j}>
-                <button onClick={() => userAnswer(c)}>{c.text}</button>
-              </div>
-            ))}
-          </ul>
-          {quizNum !== null && ansList.length > quizNum && (
-            <div>
+        !gameSet ? (
+          <div>
+            <div>{nowQuiz.category}</div>
+            <div>{nowQuiz.title}</div>
+            <div>{nowQuiz.description}</div>
+            <div>{nowQuiz.question}</div>
+            <ul>
+              {nowQuiz.choices.map((c, j) => (
+                <div key={j}>
+                  <button
+                    id={`choice-${j}`}
+                    className="choices"
+                    onClick={(e) => userAnswer(e, c)}
+                    disabled={nowChoice !== null && nowChoice !== `choice-${j}`}
+                  >
+                    {c.text}
+                  </button>
+                </div>
+              ))}
+            </ul>
+            {quizNum !== null && ansList.length > quizNum && (
               <div>
-                {ansList.slice(-1)[0].choiceCorrect ? "正解" : "不正解"}
+                <div>
+                  {ansList.slice(-1)[0].choiceCorrect ? "正解" : "不正解"}
+                </div>
+                <div>{nowQuiz.explanation}</div>
               </div>
-              <div>{nowQuiz.explanation}</div>
-            </div>
-          )}
-          {quizNum !== null && oppAnsList.length > quizNum && (
-            <div>
-              相手の回答：
-              {oppAnsList.slice(-1)[0].choiceCorrect ? "正解" : "不正解"}
-            </div>
-          )}
-        </div>
+            )}
+            {quizNum !== null && oppAnsList.length > quizNum && (
+              <div>
+                相手の回答：
+                {oppAnsList.slice(-1)[0].choiceCorrect ? "正解" : "不正解"}
+              </div>
+            )}
+            {ansList.length > quizNum && oppAnsList.length > quizNum && (
+              <div>
+                <button onClick={changeQuiz}>
+                  {!preGameSet ? "次の問題へ" : "リザルト画面へ"}
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>リザルト画面です</div>
+        )
       ) : (
         <p>クイズが見つかりません</p>
       )}
-      <div>
-        <button onClick={changeQuiz}>次の問題へ</button>
-      </div>
     </div>
   );
 };
