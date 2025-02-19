@@ -23,17 +23,15 @@ const Multiplayer = () => {
   const params = useParams();
   const roomId = params.id as string; //categoryでカテゴリ名が渡される
   const [roomData, setRoomData] = useState(null);
-  const [yourId, setYourId] = useState<string>("");
+  const [yourId, setYourId] = useState<number>(0);
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
 
   const ready = roomData && "user2" in roomData;
 
   useEffect(() => {
-    console.log("params", params);
-    console.log("params", params.id);
     const roomRef = ref(rtdb, `rooms/${roomId}`); //roomsコレクションのもとにroomIdドキュメントを作成
 
-    if (!roomId || yourId) return;
+    if (!roomId) return;
 
     //部屋を作成・2人目は更新して参加
     const createRoom = async () => {
@@ -44,16 +42,9 @@ const Multiplayer = () => {
         if (!roomSnapshot.exists()) {
           //1人目トランザクションの可能性
           //フィールド値を作成
-          await set(roomRef, {
-            roomId: roomId,
-            user1: {
-              id: 1234,
-              name: "Taro",
-            },
-          });
-          setYourId("user1");
-          console.log("data1", (await get(roomRef)).val());
-          getQuiz(); //1人目の場合のみクイズ取得・ランダム値設定
+
+          setYourId(1);
+          await getQuiz(); //1人目の場合のみクイズ取得・ランダム値設定
         } else {
           //2人目の場合
           const newUser = {
@@ -63,7 +54,7 @@ const Multiplayer = () => {
             },
           };
           await update(roomRef, newUser);
-          setYourId("user2");
+          setYourId(2);
           console.log("data2", (await get(roomRef)).val());
           const quizRef = ref(rtdb, `rooms/${roomId}/quizzesData`);
           setQuizzes((await get(quizRef)).val());
@@ -93,9 +84,17 @@ const Multiplayer = () => {
         console.log("quizzes", quizzesData);
         console.log("user:", yourId);
 
-        console.log("pre", (await get(roomRef)).val());
-        await update(roomRef, { quizzesData });
-        console.log("pre", (await get(roomRef)).val());
+        //ここでユーザと一緒にクイズを設定
+        await set(roomRef, {
+          roomId: roomId,
+          user1: {
+            id: 1234,
+            name: "Taro",
+          },
+          quizzesData: quizzesData,
+        });
+
+        console.log("data1", (await get(roomRef)).val());
 
         setQuizzes(quizzesData);
       } catch (error) {
@@ -106,7 +105,7 @@ const Multiplayer = () => {
     const createAnsList = async () => {
       try {
         const userAns = {
-          [`ans_${yourId}`]: [],
+          [`ans_user${yourId}`]: [],
         };
         await update(roomRef, userAns);
       } catch (error) {
@@ -129,7 +128,7 @@ const Multiplayer = () => {
 
     //クリーンアップ関数
     return () => off(roomRef, "value", callback);
-  }, [roomId]);
+  }, [roomId, yourId]);
 
   //部屋のドキュメントを削除する関数
   const delDoc = async () => {
@@ -146,7 +145,12 @@ const Multiplayer = () => {
       </div>
       {ready && (
         <div>
-          <Start category={roomId} userId={yourId} quizzes={quizzes} />
+          <Start
+            category={roomId}
+            userId={yourId}
+            quizzes={quizzes}
+            roomData={roomData}
+          />
         </div>
       )}
 

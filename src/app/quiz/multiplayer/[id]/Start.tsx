@@ -5,21 +5,33 @@ import { Quiz } from "@/interface/Quiz";
 import { get, push, ref } from "firebase/database";
 import React, { useState } from "react";
 
-interface Room {
-  category: string;
-  userId: string;
-  quizzes: Quiz[];
+interface RoomData {
+  roomId: string;
+  user1?: { id: number; name: string };
+  user2?: { id: number; name: string };
+  quizzesData?: Quiz[];
+  ans_user1?: object;
+  ans_user2?: object;
+  [key: `ans_user${number}`]: object | undefined;
 }
 
-export const Start = ({ category, userId, quizzes }: Room) => {
+interface Room {
+  category: string;
+  userId: number;
+  quizzes: Quiz[];
+  roomData: RoomData;
+}
+
+export const Start = ({ category, userId, quizzes, roomData }: Room) => {
   const [quizNum, setQuizNum] = useState<number>(0);
 
   const [ansList, setAnsList] = useState<
     { choiceText: string; choiceCorrect: boolean }[]
   >([]);
+  console.log("roomData", roomData);
 
   const userAnswer = async (c: Quiz["choices"][number]) => {
-    const ansRef = ref(rtdb, `rooms/${category}/ans_${userId}`);
+    const ansRef = ref(rtdb, `rooms/${category}/ans_user${userId}`);
     const answer = {
       choiceText: c.text,
       choiceCorrect: c.isCorrect,
@@ -31,6 +43,7 @@ export const Start = ({ category, userId, quizzes }: Room) => {
       console.error(error);
     }
     console.log("nowRoomData", (await get(ansRef)).val());
+    console.log("realRoomData", roomData);
   };
 
   const changeQuiz = () => {
@@ -46,7 +59,12 @@ export const Start = ({ category, userId, quizzes }: Room) => {
   console.log("ansList", ansList);
 
   const nowQuiz =
-    quizzes.length > 0 && quizNum < quizzes.length ? quizzes[quizNum] : null;
+    quizzes !== null && quizzes.length > 0 && quizNum < quizzes.length
+      ? quizzes[quizNum]
+      : null;
+
+  const oppAns = roomData?.[`ans_user${3 - userId}`];
+  const oppAnsList = oppAns ? Object.values(oppAns) : [];
 
   console.log("nowQuiz", nowQuiz);
 
@@ -73,6 +91,12 @@ export const Start = ({ category, userId, quizzes }: Room) => {
                 {ansList.slice(-1)[0].choiceCorrect ? "正解" : "不正解"}
               </div>
               <div>{nowQuiz.explanation}</div>
+            </div>
+          )}
+          {quizNum !== null && oppAnsList.length > quizNum && (
+            <div>
+              相手の回答：
+              {oppAnsList.slice(-1)[0].choiceCorrect ? "正解" : "不正解"}
             </div>
           )}
         </div>
