@@ -54,7 +54,7 @@ export const Start = ({ category, userId, quizzes, roomData }: Room) => {
   const changeQuiz = () => {
     //添え字は0から始まるため、次のクイズが存在する場合のみ実行
     setNowChoice(null);
-    if (!gameSet) {
+    if (!preGameSet) {
       setQuizNum((prev) => prev + 1);
     } else {
       return; //endQuizを作っても良い
@@ -72,8 +72,8 @@ export const Start = ({ category, userId, quizzes, roomData }: Room) => {
   const oppAns = roomData?.[`ans_user${3 - userId}`];
   const oppAnsList = oppAns ? Object.values(oppAns) : [];
 
-  const preGameSet = quizNum >= quizzes.length - 2;
-  const gameSet = quizNum >= quizzes.length - 1;
+  const preGameSet = quizNum >= quizzes.length - 1;
+  const gameSet = quizNum >= quizzes.length;
   console.log("gameSet", gameSet);
 
   console.log("nowQuiz", nowQuiz);
@@ -85,6 +85,7 @@ export const Start = ({ category, userId, quizzes, roomData }: Room) => {
       {nowQuiz !== null ? (
         !gameSet ? (
           <div>
+            <div>今の添え字：{quizNum}</div>
             <div>{nowQuiz.category}</div>
             <div>{nowQuiz.title}</div>
             <div>{nowQuiz.description}</div>
@@ -128,7 +129,12 @@ export const Start = ({ category, userId, quizzes, roomData }: Room) => {
         ) : (
           <div>
             リザルト画面です
-            <Results userId={userId} roomData={roomData} />
+            <Results
+              userId={userId}
+              roomData={roomData}
+              ansList={ansList}
+              oppAnsList={oppAnsList}
+            />
           </div>
         )
       ) : (
