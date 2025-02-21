@@ -6,9 +6,18 @@ interface Results {
   roomData: RoomData;
   ansList: { choiceText: string; choiceCorrect: boolean }[];
   oppAnsList: { choiceText: string; choiceCorrect: boolean }[];
+  point: number;
+  oppPoint: number;
 }
 
-export const Results = ({ userId, roomData, ansList, oppAnsList }: Results) => {
+export const Results = ({
+  userId,
+  roomData,
+  ansList,
+  oppAnsList,
+  point,
+  oppPoint,
+}: Results) => {
   console.log("resultsInfo", userId, roomData, ansList, oppAnsList);
 
   return (
@@ -25,12 +34,17 @@ export const Results = ({ userId, roomData, ansList, oppAnsList }: Results) => {
           {roomData.quizzesData?.map((_, i) => (
             //jsx内ではreturnがないとReactNodeにできないので、mapかつ()が必要
             <tr key={i + 1}>
-              <th>{`第${i}問`}</th>
+              <th>{`第${i + 1}問`}</th>
               <td>{ansList[i].choiceCorrect ? "正解" : "不正解"}</td>
               <td>{oppAnsList[i].choiceCorrect ? "正解" : "不正解"}</td>
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <th>最終スコア</th>
+          <td>{point}</td>
+          <td>{oppPoint}</td>
+        </tfoot>
       </table>
     </div>
   );

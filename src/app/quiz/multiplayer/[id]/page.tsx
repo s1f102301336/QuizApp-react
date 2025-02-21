@@ -24,7 +24,6 @@ const Multiplayer = () => {
   const roomId = params.id as string; //categoryでカテゴリ名が渡される
   const [roomData, setRoomData] = useState(null);
   const [yourId, setYourId] = useState<number>(0);
-  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
 
   const ready = roomData && "user2" in roomData;
 
@@ -56,8 +55,6 @@ const Multiplayer = () => {
           await update(roomRef, newUser);
           setYourId(2);
           console.log("data2", (await get(roomRef)).val());
-          const quizRef = ref(rtdb, `rooms/${roomId}/quizzesData`);
-          setQuizzes((await get(quizRef)).val());
         }
       } catch (error) {
         console.error("Error", error);
@@ -95,8 +92,6 @@ const Multiplayer = () => {
         });
 
         console.log("data1", (await get(roomRef)).val());
-
-        setQuizzes(quizzesData);
       } catch (error) {
         console.error(error);
       }
@@ -145,12 +140,7 @@ const Multiplayer = () => {
       </div>
       {ready && (
         <div>
-          <Start
-            category={roomId}
-            userId={yourId}
-            quizzes={quizzes}
-            roomData={roomData}
-          />
+          <Start category={roomId} userId={yourId} roomData={roomData} />
         </div>
       )}
 
