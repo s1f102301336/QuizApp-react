@@ -24,6 +24,7 @@ export const Start = ({ category, userId, roomData }: Room) => {
   const [nowChoice, setNowChoice] = useState<string | null>(null);
   const [point, setPoint] = useState(0);
 
+  //クイズ一覧を参照
   const quizzes: Quiz[] = roomData?.quizzesData ?? []; //?? 左辺が偽値の時、右辺を返す
 
   //回答内容を保存する関数
@@ -174,4 +175,4 @@ export const Start = ({ category, userId, roomData }: Room) => {
 //rtdbでlength取得、数字の羅列を配列にして、ランダムにシャッフルし共有、クイズの遷移時にその配列の順に添え字を変更して遷移
 //quizzesはfirestoreだけどprops奈良渡していいかも
 
-//userId = 0が出現・quizzesの状態からの解放
+//userId = 0が出現・認証機能を追加しよう

@@ -46,6 +46,9 @@ export const Results = ({
           <td>{oppPoint}</td>
         </tfoot>
       </table>
+      <div>
+        {point > oppPoint ? "WIN" : point - oppPoint === 0 ? "DRAW" : "LOSE"}
+      </div>
     </div>
   );
 };
