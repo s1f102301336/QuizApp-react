@@ -25,6 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head></head>
       <body>{children}</body>
     </html>
   );
