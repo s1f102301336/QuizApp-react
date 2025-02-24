@@ -6,7 +6,7 @@ export const Header = () => {
     <div>
       Header
       <Link href={"./accounts/login"}>
-        <button>ログインはこちら</button>
+        <button>マイページ</button>
       </Link>
     </div>
   );

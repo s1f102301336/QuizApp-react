@@ -10,23 +10,37 @@ import {
 } from "firebase/auth";
 
 const Register = () => {
-  const SignUpWithGoogle = () => {
+  const SignUpWithEmail = (formData: FormData) => {
+    const email = String(formData.get("email"));
+    const password = String(formData.get("password"));
+    const name = String(formData.get("name"));
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         //Signed up
         const user = userCredential.user;
+
+        console.log("user", user);
       })
       .catch((error) => console.error(error));
   };
 
   return (
     <div>
-      <form action="SignUp" method="post">
-        <input type="email" />
-        <input type="password" />
-        <button type="submit" onClick={SignUpWithGoogle}>
-          登録
-        </button>
+      <form action={SignUpWithEmail} method="post">
+        <div>
+          <label htmlFor="email">メールアドレス</label>
+          <input type="mail" name="email" />
+        </div>
+        <div>
+          <label htmlFor="password">パスワード(6文字以上)</label>
+          <input type="text" name="password" />
+        </div>
+        <div>
+          <label htmlFor="name">ユーザー名</label>
+          <input type="text" name="name" />
+        </div>
+        <button type="submit">登録</button>
       </form>
       <div id="firebase-auth-container"></div>
     </div>
