@@ -38,8 +38,9 @@ const Login = () => {
     }
   };
 
-  const duplicateName = (e) => {};
-  const setUserData = () => {};
+  const setUserData = (formData: FormData) => {
+    const userName = formData.get("name");
+  };
   return (
     <div>
       <div>
@@ -49,12 +50,14 @@ const Login = () => {
           </button>
         )}
       </div>
+      {/* 以下はただユーザー名を設定するだけの機能にする */}
       {!isSignUp && isSignIn && (
         <div>
           <form action={setUserData} method="post">
             <label htmlFor="name">ユーザー名</label>
-            <input type="text" onChange={duplicateName(e)} value={userName} />
-            <input type="image" src="#" alt="icon" />
+            <input type="text" name="name" />
+            {/* <label htmlFor="icon">アイコンを設定</label>
+            <input type="image" src="#" alt="icon" name="icon"/> */}
             <button type="submit">登録</button>
           </form>
         </div>
