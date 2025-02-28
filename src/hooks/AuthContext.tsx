@@ -1,14 +1,18 @@
-import { ReactNode, createContext, useContext, useState } from "react";
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-}
+"use client";
+import { auth } from "@/firebase";
+import { User } from "@/interface/User";
+import { onAuthStateChanged } from "firebase/auth";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface AuthContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: User;
+  setUser: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,10 +26,27 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        setUser({
+          id: firebaseUser.uid,
+          username: firebaseUser.displayName || "ゲスト",
+          email: firebaseUser.email || "",
+        });
+      } else {
+        setUser({ id: "", username: "ゲスト", email: "" });
+      }
+    });
 
-  const isAuth = () => {};
+    return () => unsubscribe();
+  }, []);
 
+  const [user, setUser] = useState<User>({
+    id: "",
+    username: "ゲスト",
+    email: "",
+  });
   const contextValue = { user, setUser };
 
   return (

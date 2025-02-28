@@ -1,48 +1,78 @@
 "use client";
 import { auth } from "@/firebase";
-import { signInWithPopup } from "firebase/auth";
+import { useAuth } from "@/hooks/AuthContext";
+import { User } from "@/interface/User";
+import {
+  browserLocalPersistence,
+  setPersistence,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 import React, { useState } from "react";
 
 const Login = () => {
-  const [userName, setUserName] = useState("");
-  const [isSignIn, setIsSignIn] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
+  const { user, setUser } = useAuth();
 
-  const SignInWithGoogle = () => {
+  const SignInWithGoogle = async () => {
     if (typeof window === "undefined") {
       console.error("Google Auth can only be used in a browser environment.");
       return;
     }
 
-    const provider = new GoogleAuthProvider();
-
     try {
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          const credential = GoogleAuthProvider.credentialFromResult(result);
-          const token = credential?.accessToken;
-          const user = result.user.displayName;
-          console.log("user", user);
-          setIsSignIn(true);
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const email = error.customData.email;
-          const credential = GoogleAuthProvider.credentialFromError(error);
-          console.error(error);
-        });
+      await setPersistence(auth, browserLocalPersistence);
+      const result = await signInWithPopup(auth, new GoogleAuthProvider());
+
+      const user = result.user.displayName;
+      console.log("user", user);
+      const newUser: User = {
+        id: result.user.uid,
+        username: result.user.displayName || "ゲスト",
+        email: result.user.email || "",
+      };
+      setUser(newUser);
     } catch (error) {
       console.error("Error signing in with Google:", error);
     }
   };
 
-  const setUserData = (formData: FormData) => {
-    const userName = formData.get("name");
+  const handleSubmit = (e: React.FocusEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const newUserName = formData.get("name") as string;
+
+    if (!newUserName) {
+      alert("ユーザ名を入力してください");
+      return;
+    }
+
+    if (auth.currentUser) {
+      try {
+        updateProfile(auth.currentUser, {
+          displayName: newUserName,
+        });
+        setUser({ ...user, username: newUserName });
+        console.log("プロフィールを更新しました");
+      } catch (error) {
+        console.error("プロフィールの更新に失敗しました", error);
+      }
+    }
   };
+
+  const isSignIn = !!user.id; //Boolean()と同じ意味
+
   return (
     <div>
+      <div>
+        <div>プロフィール</div>
+        <ul>
+          <li>id:{user.id}</li>
+          <li>name:{user.username}</li>
+          <li>email:{user.email}</li>
+        </ul>
+      </div>
+      アカウント登録をすると対戦結果が記録され、クイズ作成を行うこともできます
       <div>
         {!isSignIn && (
           <button onClick={SignInWithGoogle}>
@@ -51,9 +81,9 @@ const Login = () => {
         )}
       </div>
       {/* 以下はただユーザー名を設定するだけの機能にする */}
-      {!isSignUp && isSignIn && (
+      {isSignIn && (
         <div>
-          <form action={setUserData} method="post">
+          <form onSubmit={handleSubmit} method="post">
             <label htmlFor="name">ユーザー名</label>
             <input type="text" name="name" />
             {/* <label htmlFor="icon">アイコンを設定</label>
