@@ -5,7 +5,7 @@ export const Header = () => {
   return (
     <div>
       Header
-      <Link href={"./accounts/login"}>
+      <Link href={"/accounts/login"}>
         <button>マイページ</button>
       </Link>
     </div>

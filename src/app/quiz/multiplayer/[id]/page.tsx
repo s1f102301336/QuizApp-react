@@ -18,12 +18,14 @@ import { Start } from "./Start";
 import Link from "next/link";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { Quiz } from "@/interface/Quiz";
+import { useAuth } from "@/hooks/AuthContext";
 
 const Multiplayer = () => {
   const params = useParams();
   const roomId = params.id as string; //categoryでカテゴリ名が渡される
   const [roomData, setRoomData] = useState(null);
   const [yourId, setYourId] = useState<number>(0);
+  const { user } = useAuth();
 
   const ready = roomData && "user2" in roomData;
 
@@ -48,8 +50,8 @@ const Multiplayer = () => {
           //2人目の場合
           const newUser = {
             user2: {
-              id: 2345,
-              name: "John",
+              id: user.id,
+              name: user.username,
             },
           };
           await update(roomRef, newUser);
@@ -85,8 +87,8 @@ const Multiplayer = () => {
         await set(roomRef, {
           roomId: roomId,
           user1: {
-            id: 1234,
-            name: "Taro",
+            id: user.id,
+            name: user.username,
           },
           quizzesData: quizzesData,
         });

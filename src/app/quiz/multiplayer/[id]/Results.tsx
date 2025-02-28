@@ -41,9 +41,11 @@ export const Results = ({
           ))}
         </tbody>
         <tfoot>
-          <th>最終スコア</th>
-          <td>{point}</td>
-          <td>{oppPoint}</td>
+          <tr>
+            <th>最終スコア</th>
+            <td>{point}</td>
+            <td>{oppPoint}</td>
+          </tr>
         </tfoot>
       </table>
       <div>
