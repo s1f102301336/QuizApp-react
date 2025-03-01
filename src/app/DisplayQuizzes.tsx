@@ -37,6 +37,7 @@ export const DisplayQuizzes = ({ category }: { category: string }) => {
           <Link href={`./quiz/multiplayer/${category}`}>
             <button>入室</button>
           </Link>
+          {/* ログインしてない人は無効にし、popup的なもので催促 */}
         </div>
       }
       {quizzes

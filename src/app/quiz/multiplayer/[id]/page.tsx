@@ -16,21 +16,59 @@ import React, { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
 import { Start } from "./Start";
 import Link from "next/link";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { Quiz } from "@/interface/Quiz";
 import { useAuth } from "@/hooks/AuthContext";
+import { RoomData } from "@/interface/RoomData";
 
 const Multiplayer = () => {
   const params = useParams();
   const roomId = params.id as string; //categoryでカテゴリ名が渡される
-  const [roomData, setRoomData] = useState(null);
+  const [roomData, setRoomData] = useState<RoomData | null>(null);
   const [yourId, setYourId] = useState<number>(0);
+  const [errorState, setErrorState] = useState<string | null>(null);
   const { user } = useAuth();
+  const roomRef = ref(rtdb, `rooms/${roomId}`);
 
-  const ready = roomData && "user2" in roomData;
+  const ready =
+    roomData &&
+    "user2" in roomData &&
+    roomData.isGameStarted &&
+    errorState === null;
+
+  //エラーチェック
+  useEffect(() => {
+    if (!roomData) return;
+    //同じユーザーが入ってきたときは無効
+    if (
+      roomData &&
+      roomData.user1 &&
+      roomData?.user2 &&
+      roomData?.user1.id === roomData.user2.id
+    ) {
+      setErrorState("同じ部屋に入ることはできません");
+      if (roomData.isGameStarted) {
+        update(roomRef, { isGameStarted: false });
+      }
+      if (yourId === 2) {
+        console.log("setTimeoutを登録");
+
+        setTimeout(() => {
+          window.location.href = "/";
+          remove(ref(rtdb, `rooms/${roomId}/user2`));
+        }, 5000);
+      }
+      return;
+    } else {
+      setErrorState(null);
+      if (roomData?.user2 && !roomData.isGameStarted) {
+        update(roomRef, { isGameStarted: true });
+      }
+    }
+  }, [roomData]);
 
   useEffect(() => {
-    const roomRef = ref(rtdb, `rooms/${roomId}`); //roomsコレクションのもとにroomIdドキュメントを作成
+    //roomsコレクションのもとにroomIdドキュメントを作成
 
     if (!roomId) return;
 
@@ -48,6 +86,8 @@ const Multiplayer = () => {
           await getQuiz(); //1人目の場合のみクイズ取得・ランダム値設定
         } else {
           //2人目の場合
+          console.log("2人目入室");
+
           const newUser = {
             user2: {
               id: user.id,
@@ -55,10 +95,16 @@ const Multiplayer = () => {
             },
           };
           await update(roomRef, newUser);
+
           setYourId(2);
           console.log("data2", (await get(roomRef)).val());
         }
       } catch (error) {
+        if (error instanceof Error) {
+          if (error.message === "Permission denied") {
+            console.log("権限エラーです");
+          }
+        }
         console.error("Error", error);
       }
     };
@@ -66,11 +112,13 @@ const Multiplayer = () => {
 
     const getQuiz = async () => {
       try {
+        const quizLim = 5;
+
         const quizRef = collection(db, "quizzes");
         const q =
           roomId !== "ALL"
-            ? query(quizRef, where("category", "==", roomId))
-            : query(quizRef);
+            ? query(quizRef, where("category", "==", roomId), limit(quizLim))
+            : query(quizRef, limit(quizLim));
 
         const snapshot = await getDocs(q);
 
@@ -91,6 +139,7 @@ const Multiplayer = () => {
             name: user.username,
           },
           quizzesData: quizzesData,
+          isGameStarted: false,
         });
 
         console.log("data1", (await get(roomRef)).val());
@@ -140,6 +189,13 @@ const Multiplayer = () => {
       <div>
         roomData:{roomData ? JSON.stringify(roomData, null, 2) : "No Data"}
       </div>
+      {errorState && yourId === 2 && (
+        <div>
+          <div style={{ color: "red" }}>{errorState}</div>
+
+          <div>5秒ほどで自動的にホーム画面に戻ります</div>
+        </div>
+      )}
       {ready && (
         <div>
           <Start category={roomId} userId={yourId} roomData={roomData} />

@@ -11,6 +11,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
+import Link from "next/link";
 import React from "react";
 
 const Login = () => {
@@ -101,6 +102,9 @@ const Login = () => {
 
   return (
     <div>
+      <Link href="/">
+        <button>ホームに戻る</button>
+      </Link>
       <div>
         <div>プロフィール</div>
         <ul>
