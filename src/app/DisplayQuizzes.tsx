@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/firebase";
+import { auth, db } from "@/firebase";
 import Link from "next/link";
 import { Quiz } from "@/interface/Quiz";
-import { QuizWithId } from "@/interface/QuizQithId";
+import { QuizWithId } from "@/interface/QuizWithId";
 
 //OmitでimportしたQuizを再利用できるかも
 
 export const DisplayQuizzes = ({ category }: { category: string }) => {
+  const isSignIn = auth.currentUser;
+
   const [quizzes, setQuizzes] = useState<QuizWithId[]>([]);
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -34,7 +36,7 @@ export const DisplayQuizzes = ({ category }: { category: string }) => {
         <div>
           <div>クイズマッチ</div>
           <div>カテゴリ：{category}</div>
-          <Link href={`./quiz/multiplayer/${category}`}>
+          <Link href={isSignIn ? `./quiz/multiplayer/${category}` : "#"}>
             <button>入室</button>
           </Link>
           {/* ログインしてない人は無効にし、popup的なもので催促 */}

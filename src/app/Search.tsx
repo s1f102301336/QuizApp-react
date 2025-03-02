@@ -5,7 +5,7 @@ import Link from "next/link";
 import { DisplayQuizzes } from "./DisplayQuizzes";
 
 export const Search = () => {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("ALL");
   return (
     <div>
       Search
