@@ -1,7 +1,7 @@
 // import Image from "next/image";
 import { Header } from "@/components/Header";
-import styles from "../styles/page.module.css";
 import { Search } from "./Search";
+import styles from "../styles/page.module.css";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
       <main className={styles.main}>
         <Search />
       </main>
-      <footer className={styles.footer}>footerです</footer>
+      <footer className={styles.footer}></footer>
     </div>
   );
 }
