@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { DisplayQuizzes } from "./DisplayQuizzes";
+import style from "./search.module.css";
 
 export const Search = () => {
   const [category, setCategory] = useState("ALL");
   return (
     <div>
       Search
-      <div>
+      <div className={style.container}>
         <div>
           <select
             name="category"
@@ -28,7 +28,6 @@ export const Search = () => {
             <option value="Other">その他</option>
           </select>
         </div>
-        <Link href="./quiz/create">クイズ作成はこちら</Link>
       </div>
       <DisplayQuizzes category={category} />
     </div>

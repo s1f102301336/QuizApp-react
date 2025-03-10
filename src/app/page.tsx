@@ -12,7 +12,7 @@ export default function Home() {
       <main className={styles.main}>
         <Search />
       </main>
-      <footer className={styles.footer}></footer>
+      <footer className={styles.footer}>footerです</footer>
     </div>
   );
 }
