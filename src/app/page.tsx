@@ -1,18 +1,20 @@
 // import Image from "next/image";
 import { Header } from "@/components/Header";
-import { Search } from "./Search";
-import styles from "../styles/page.module.css";
+import { QuizContainer } from "./home/QuizContainer";
+import style from "../styles/page.module.css";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
+    <div className={style.page}>
       <header>
         <Header />
       </header>
-      <main className={styles.main}>
-        <Search />
+
+      <main className={style.main}>
+        <QuizContainer />
       </main>
-      <footer className={styles.footer}>footerです</footer>
+
+      <footer className={style.footer}>footerです</footer>
     </div>
   );
 }

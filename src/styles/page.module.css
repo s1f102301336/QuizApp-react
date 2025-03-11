@@ -1,24 +1,9 @@
 /* 基本レイアウトのみ */
 .page {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #2962ff;
+  background-color: #336ce5;
   height: 100%;
-}
-.main {
-  width: 80%; /* 通常時は画面幅の60% */
-  /* max-width: 800px; 最大幅を800pxに制限 */
-  margin: 0 auto; /* 中央揃え */
-  padding: 20px; /* 余白 */
-  /* background-color: lightgray; デザイン確認用 */
-}
-
-@media (max-width: 600px) {
-  .main {
-    width: 100%; /* 画面幅いっぱいに */
-    max-width: none; /* 制限を解除 */
-    margin: 0; /* 左右の余白をなくす */
-    padding: 10px; /* スペースを少し減らす */
-  }
+  color: #636363;
 }
 
 .footer {
