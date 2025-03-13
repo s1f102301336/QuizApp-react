@@ -35,32 +35,46 @@ export const DisplayQuizzes = ({ category }: { category: string }) => {
         {
           //とりあえず1問だけ
           //このままリンクにするか、Comportsとして包括し、スライドショーにするか
-          <div className={style.MultiContainer}>
-            <div>バトルマッチ</div>
-            <div>カテゴリ：{category}</div>
-            <Link href={isSignIn ? `./quiz/multiplayer/${category}` : "#"}>
-              <button>入室</button>
-            </Link>
+          <div className={style.multiContainer}>
+            <div className={style.multiBody}>
+              <h2>バトルマッチ</h2>
+              <div className={style.multiCard}>
+                <div>
+                  <h3>対戦部屋</h3>
+                  <div>カテゴリ：{category}</div>
+                  <p>選択したカテゴリの問題がランダムに出題されます</p>
+                </div>
+                <div className={style.multiBtn}>
+                  <Link
+                    href={isSignIn ? `./quiz/multiplayer/${category}` : "#"}
+                  >
+                    入室
+                  </Link>
+                </div>
+              </div>
+            </div>
             {/* ログインしてない人は無効にし、popup的なもので催促 */}
           </div>
         }
         <div className={style.localContainer}>
           <div className={style.localBody}>
-            <div>シングルマッチ</div>
-            {quizzes
-              .filter((q) => category === "ALL" || q.category === category)
-              .map((quiz) => (
-                <div key={quiz.id} className={style.localCard}>
-                  <div className={style.localText}>
-                    <div>{quiz.title}</div>
-                    <div>{quiz.description}</div>
+            <h2>シングルマッチ</h2>
+            <div>
+              {quizzes
+                .filter((q) => category === "ALL" || q.category === category)
+                .map((quiz) => (
+                  <div key={quiz.id} className={style.localCard}>
+                    <div>
+                      <h3>{quiz.title}</h3>
+                      <p>{quiz.description}</p>
+                    </div>
+                    {/* Localではランダム値idで識別 */}
+                    <div className={style.localBtn}>
+                      <Link href={`./quiz/local/${quiz.id}`}>入室</Link>
+                    </div>
                   </div>
-                  {/* Localではランダム値idで識別 */}
-                  <Link href={`./quiz/local/${quiz.id}`}>
-                    <button className={style.localButton}>入室</button>
-                  </Link>
-                </div>
-              ))}
+                ))}
+            </div>
           </div>
         </div>
       </div>

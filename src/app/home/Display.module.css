@@ -1,49 +1,68 @@
 .container {
   background-color: white;
   border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  padding: 5% 0;
 }
 
-.MultiContainer {
+.multiContainer {
   display: flex;
   justify-content: center;
   flex-direction: column;
 }
 
-.MultiCard {
+.multiCard {
 }
 
-.localContainer {
+.localContainer,
+.multiContainer {
   display: flex;
   justify-content: center;
   width: 80%;
   margin: 0 auto;
 }
-.localBody {
+
+.localBody,
+.multiBody {
   display: flex;
   flex-direction: column;
   width: 100%;
-}
-
-@media (max-width: 800px) {
-  .localContainer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin: 0 auto;
+  padding: 2% 0;
+  h2 {
+    text-align: center;
   }
 }
 
-.localCard {
+@media (max-width: 800px) {
+  .localContainer,
+  .multiContainer {
+    width: 100%;
+  }
+}
+
+.localCard,
+.multiCard {
   background-color: #eff4ff;
   border: solid none 2px;
   border-radius: 10px;
   margin: 1%;
   padding: 2%;
+  display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  margin: 2%;
 }
 
-.localText {
-}
-
-.localButton {
+.localBtn,
+.multiBtn {
+  display: flex;
+  align-items: end;
+  text-align: center;
+  width: 13%;
+  a {
+    background-color: #e98d33;
+    color: white;
+    border-radius: 15px;
+    width: 100%;
+  }
 }
