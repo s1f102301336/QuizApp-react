@@ -13,6 +13,7 @@ import {
 import { GoogleAuthProvider } from "firebase/auth";
 import Link from "next/link";
 import React from "react";
+import style from "./login.module.css";
 
 const Login = () => {
   const { user, setUser } = useAuth();
@@ -101,46 +102,54 @@ const Login = () => {
   const isSignIn = !!user.id; //Boolean()と同じ意味
 
   return (
-    <div>
+    <div className={style.container}>
       <Link href="/">
         <button>ホームに戻る</button>
       </Link>
-      <div>
-        <div>プロフィール</div>
-        <ul>
-          <li>id:{user.id}</li>
-          <li>name:{user.username}</li>
-          <li>email:{user.email}</li>
-        </ul>
-      </div>
-      アカウント登録をすると対戦結果が記録され、クイズ作成を行うこともできます
-      <div>
-        {!isSignIn && (
-          <button onClick={SignInWithGoogle}>
-            Googleアカウントでサインアップ/サインイン
-          </button>
-        )}
-      </div>
-      {/* 以下はただユーザー名を設定するだけの機能にする */}
-      {isSignIn && (
+      <div className={style.body}>
         <div>
-          <form onSubmit={handleSubmit} method="post">
-            <label htmlFor="name">ユーザー名</label>
-            <input type="text" name="name" />
-            {/* <label htmlFor="icon">アイコンを設定</label>
-            <input type="image" src="#" alt="icon" name="icon"/> */}
-            <button type="submit">登録</button>
-          </form>
-          <div>
-            <button onClick={SignOut}>サインアウト</button>
-          </div>
-          <div>
-            <button onClick={handleDelete} style={{ color: "red" }}>
-              アカウントを削除
-            </button>
+          <div className={style.profileCard}>
+            <div>
+              <div>プロフィール</div>
+              <ul>
+                <li>id:{user.id}</li>
+                <li>name:{user.username}</li>
+                <li>email:{user.email}</li>
+              </ul>
+            </div>
+            <div>
+              アカウント登録をすると対戦結果が記録され、クイズ作成を行うこともできます
+            </div>
+            <div>
+              {!isSignIn && (
+                <button onClick={SignInWithGoogle}>
+                  Googleアカウントでサインアップ/サインイン
+                </button>
+              )}
+            </div>
+            {/* 以下はただユーザー名を設定するだけの機能にする */}
+            {isSignIn && (
+              <div>
+                <form onSubmit={handleSubmit} method="post">
+                  <label htmlFor="name">ユーザー名</label>
+                  <input type="text" name="name" />
+                  {/* <label htmlFor="icon">アイコンを設定</label>
+                  <input type="image" src="#" alt="icon" name="icon"/> */}
+                  <button type="submit">登録</button>
+                </form>
+                <div>
+                  <button onClick={SignOut}>サインアウト</button>
+                </div>
+                <div>
+                  <button onClick={handleDelete} style={{ color: "red" }}>
+                    アカウントを削除
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

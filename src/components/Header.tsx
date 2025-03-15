@@ -5,13 +5,14 @@ import style from "./Header.module.css";
 export const Header = () => {
   return (
     <div className={style.container}>
-      Header
-      <Link href="./quiz/create">
-        <button>クイズ作成</button>
-      </Link>
-      <Link href={"/accounts/login"}>
-        <button>マイページ</button>
-      </Link>
+      <div className={style.body}>
+        <Link href="./quiz/create" className={style.btn}>
+          クイズ作成
+        </Link>
+        <Link href={"/accounts/login"} className={style.btn}>
+          マイページ
+        </Link>
+      </div>
     </div>
   );
 };

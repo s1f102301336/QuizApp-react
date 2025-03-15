@@ -1,4 +1,18 @@
 .container {
+  background-color: none;
+  display: flex;
+  justify-content: right;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn {
   background-color: #eff4ff;
-  height: 10%;
+  border-radius: 2px;
+  width: 90px;
+  height: 20px;
+  margin-top: 5%;
 }

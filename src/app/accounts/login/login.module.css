@@ -1,0 +1,18 @@
+.container {
+  background-color: #336ce5;
+  height: 100%;
+}
+
+.body {
+  background-color: #eff4ff;
+  display: flex;
+  justify-content: center;
+}
+
+.profileCard {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  flex-direction: column;
+}
