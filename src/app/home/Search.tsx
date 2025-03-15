@@ -1,4 +1,3 @@
-import React from "react";
 import style from "./Search.module.css";
 
 export const Search = ({
@@ -8,9 +7,21 @@ export const Search = ({
   category: string;
   setCategory: (val: string) => void;
 }) => {
+  const categories = {
+    ALL: "ALL",
+    Anime_Manga: "アニメ/漫画",
+    Games: "ゲーム",
+    Music: "音楽",
+    History: "歴史",
+    Math: "数学",
+    Science: "理科",
+    Literature: "文学",
+    Other: "その他",
+  };
+
   return (
     <div className={style.container}>
-      <div>
+      {/* <div>
         <select
           name="category"
           id="category"
@@ -27,6 +38,23 @@ export const Search = ({
           <option value="Literature">文学</option>
           <option value="Other">その他</option>
         </select>
+      </div> */}
+
+      <div className={style.tab1}>
+        {Object.entries(categories).map(([key, value]) => {
+          return (
+            <label key={key}>
+              <input
+                type="radio"
+                name={key}
+                value={key}
+                checked={key === category}
+                onChange={() => setCategory(key)}
+              />
+              {value}
+            </label>
+          );
+        })}
       </div>
     </div>
   );

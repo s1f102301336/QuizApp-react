@@ -11,8 +11,9 @@
   flex-direction: column;
 }
 
-.multiCard {
-}
+/* .multiCard {
+  border: solid 3px #b393ed;
+} */
 
 .localContainer,
 .multiContainer {
