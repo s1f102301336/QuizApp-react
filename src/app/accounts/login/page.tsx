@@ -14,6 +14,8 @@ import { GoogleAuthProvider } from "firebase/auth";
 import Link from "next/link";
 import React from "react";
 import style from "./login.module.css";
+import Image from "next/image";
+import Logo from "../../../../public/Logo_2.png";
 
 const Login = () => {
   const { user, setUser } = useAuth();
@@ -107,15 +109,25 @@ const Login = () => {
         <button>ホームに戻る</button>
       </Link>
       <div className={style.body}>
-        <div>
-          <div className={style.profileCard}>
+        <div className={style.profileCard}>
+          <div>
             <div>
+              <Image src={Logo} alt="Logo Icon" className={style.logo} />
               <div>プロフィール</div>
-              <ul>
-                <li>id:{user.id}</li>
-                <li>name:{user.username}</li>
-                <li>email:{user.email}</li>
-              </ul>
+              <div>
+                <div className={style.prfText}>
+                  <div className={style.prfHead}>id:</div>
+                  <div className={style.prfBody}>{user.id}</div>
+                </div>
+                <div className={style.prfText}>
+                  <div className={style.prfHead}>name:</div>
+                  <div className={style.prfBody}>{user.username}</div>
+                </div>
+                <div className={style.prfText}>
+                  <div className={style.prfHead}>email:</div>
+                  <div className={style.prfBody}>{user.email}</div>
+                </div>
+              </div>
             </div>
             <div>
               アカウント登録をすると対戦結果が記録され、クイズ作成を行うこともできます
