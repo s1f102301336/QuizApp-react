@@ -2,19 +2,21 @@
 import { Header } from "@/components/Header";
 import { QuizContainer } from "./home/QuizContainer";
 import style from "../styles/page.module.css";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
     <div className={style.page}>
       <header>
-        <Header />
+        <Header isLogo={false} page={"home"} />
       </header>
 
       <main className={style.main}>
         <QuizContainer />
       </main>
 
-      <footer className={style.footer}>footerです</footer>
+      <Footer />
+      <footer className={style.footer}></footer>
     </div>
   );
 }

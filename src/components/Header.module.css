@@ -4,7 +4,7 @@
   justify-content: right;
 }
 
-.body {
+.menu {
   display: flex;
   flex-direction: column;
 }
@@ -15,4 +15,27 @@
   width: 90px;
   height: 20px;
   margin-top: 5%;
+}
+
+.logo {
+  min-width: 70px;
+  min-height: 70px;
+  width: 20%;
+  height: auto;
+  margin-right: 5px;
+}
+
+.text {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 7%;
+}
+
+.appName {
+  min-height: 70px;
+  font-size: 70px;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
 }

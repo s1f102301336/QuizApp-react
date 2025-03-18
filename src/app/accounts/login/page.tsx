@@ -11,11 +11,12 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
-import Link from "next/link";
 import React from "react";
 import style from "./login.module.css";
 import Image from "next/image";
 import Logo from "../../../../public/Logo_2.png";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 const Login = () => {
   const { user, setUser } = useAuth();
@@ -105,9 +106,8 @@ const Login = () => {
 
   return (
     <div className={style.container}>
-      <Link href="/">
-        <button>ホームに戻る</button>
-      </Link>
+      <Header isLogo={true} page={"other"} />
+
       <div className={style.body}>
         <div className={style.profileCard}>
           <div>
@@ -129,39 +129,41 @@ const Login = () => {
                 </div>
               </div>
             </div>
-            <div>
-              アカウント登録をすると対戦結果が記録され、クイズ作成を行うこともできます
-            </div>
+
             <div>
               {!isSignIn && (
-                <button onClick={SignInWithGoogle}>
-                  Googleアカウントでサインアップ/サインイン
-                </button>
+                <div>
+                  <div>
+                    アカウント登録をすると対戦結果が記録され、クイズ作成を行うこともできます
+                  </div>
+                  <button onClick={SignInWithGoogle}>
+                    Googleアカウントでサインアップ/サインイン
+                  </button>
+                </div>
               )}
             </div>
             {/* 以下はただユーザー名を設定するだけの機能にする */}
             {isSignIn && (
-              <div>
+              <div className={style.optionSignIn}>
                 <form onSubmit={handleSubmit} method="post">
-                  <label htmlFor="name">ユーザー名</label>
+                  <label htmlFor="name">ユーザー名を変更：</label>
                   <input type="text" name="name" />
                   {/* <label htmlFor="icon">アイコンを設定</label>
                   <input type="image" src="#" alt="icon" name="icon"/> */}
                   <button type="submit">登録</button>
                 </form>
-                <div>
-                  <button onClick={SignOut}>サインアウト</button>
+                <div className={style.signOut}>
+                  <div onClick={SignOut}>サインアウト</div>
                 </div>
-                <div>
-                  <button onClick={handleDelete} style={{ color: "red" }}>
-                    アカウントを削除
-                  </button>
+                <div className={style.delete}>
+                  <div onClick={handleDelete}>アカウントを削除</div>
                 </div>
               </div>
             )}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

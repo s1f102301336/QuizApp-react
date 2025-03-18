@@ -8,6 +8,7 @@
   display: flex;
   justify-content: center;
   height: 100vh;
+  padding: 5%;
 }
 
 .profileCard {
@@ -16,10 +17,13 @@
   text-align: center;
   display: flex;
   justify-content: center;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
 .prfText {
   display: flex;
+  padding: 3% 3% 3% 0;
 }
 
 .prfHead {
@@ -31,5 +35,31 @@
 .prfBody {
   display: flex;
   justify-content: center;
-  width: 80%;
+  width: 90%;
+}
+
+.optionSignIn {
+  padding-top: 5%;
+  text-align: center;
+}
+
+.signOut {
+  width: 30%;
+  margin: auto;
+  color: white;
+  border-radius: 15px;
+  padding: 1%;
+  margin-top: 5%;
+  background-color: #e98d33;
+  text-align: center;
+}
+
+.delete {
+  color: red;
+  margin-top: 15%;
+}
+
+.delete:hover {
+  background-color: red;
+  color: white;
 }

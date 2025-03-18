@@ -1,0 +1,34 @@
+.footer2 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 25px 10px 10px;
+  background-color: #336ce5;
+}
+
+.footer2__logo {
+  width: 130px;
+  height: 30px;
+}
+
+.footer2__list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0 1.5em;
+  list-style-type: none;
+  margin: 0 0 0.5em;
+  padding: 0.5em;
+}
+
+.footer2__snsIcon {
+  width: 21px;
+  height: 21px;
+}
+
+.footer2__copyright {
+  margin: 0;
+  color: #ffffffb3;
+  font-weight: 200;
+  font-size: 0.8em;
+}
