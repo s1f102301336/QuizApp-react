@@ -52,14 +52,17 @@
   margin-top: 5%;
   background-color: #e98d33;
   text-align: center;
+  :hover {
+    cursor: pointer;
+  }
 }
 
 .delete {
   color: red;
   margin-top: 15%;
-}
-
-.delete:hover {
-  background-color: red;
-  color: white;
+  :hover {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+  }
 }

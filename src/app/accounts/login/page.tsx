@@ -17,6 +17,7 @@ import Image from "next/image";
 import Logo from "../../../../public/Logo_2.png";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { GoogleBtn } from "@/components/GoogleBtn";
 
 const Login = () => {
   const { user, setUser } = useAuth();
@@ -117,7 +118,9 @@ const Login = () => {
               <div>
                 <div className={style.prfText}>
                   <div className={style.prfHead}>id:</div>
-                  <div className={style.prfBody}>{user.id}</div>
+                  <div className={style.prfBody}>
+                    {user.id ? user.id : "guest"}
+                  </div>
                 </div>
                 <div className={style.prfText}>
                   <div className={style.prfHead}>name:</div>
@@ -125,7 +128,9 @@ const Login = () => {
                 </div>
                 <div className={style.prfText}>
                   <div className={style.prfHead}>email:</div>
-                  <div className={style.prfBody}>{user.email}</div>
+                  <div className={style.prfBody}>
+                    {user.email ? user.email : "guest@gmai.com"}
+                  </div>
                 </div>
               </div>
             </div>
@@ -134,11 +139,14 @@ const Login = () => {
               {!isSignIn && (
                 <div>
                   <div>
-                    アカウント登録をすると対戦結果が記録され、クイズ作成を行うこともできます
+                    アカウント登録をすると対戦結果が記録され、
+                    <br />
+                    クイズ作成を行うこともできます
                   </div>
-                  <button onClick={SignInWithGoogle}>
-                    Googleアカウントでサインアップ/サインイン
-                  </button>
+                  <div>Googleアカウントでサインアップ/サインイン</div>
+                  <div onClick={SignInWithGoogle}>
+                    <GoogleBtn />
+                  </div>
                 </div>
               )}
             </div>

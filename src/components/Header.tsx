@@ -19,22 +19,24 @@ export const Header = ({ isLogo, page }: { isLogo: boolean; page: Page }) => {
         </div>
       )}
       <div className={style.menu}>
-        {page === "home" ? (
-          <>
-            <Link href="./quiz/create" className={style.btn}>
-              クイズ作成
+        <div className={style.menuBody}>
+          {page === "home" ? (
+            <>
+              <Link href="./quiz/create" className={style.btn}>
+                クイズ作成
+              </Link>
+              <Link href={"/accounts/login"} className={style.btn}>
+                マイページ
+              </Link>
+            </>
+          ) : page === "other" ? (
+            <Link href="/" className={style.btn}>
+              ホーム
             </Link>
-            <Link href={"/accounts/login"} className={style.btn}>
-              マイページ
-            </Link>
-          </>
-        ) : page === "other" ? (
-          <Link href="/" className={style.btn}>
-            ホーム
-          </Link>
-        ) : (
-          <div></div> //playページでは表示しない
-        )}
+          ) : (
+            <div></div> //playページでは表示しない
+          )}
+        </div>
       </div>
     </div>
   );
