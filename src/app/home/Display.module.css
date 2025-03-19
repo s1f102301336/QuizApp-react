@@ -60,10 +60,14 @@
   align-items: end;
   text-align: center;
   width: 13%;
-  a {
+  > * {
+    /* 直下の子要素 */
     background-color: #e98d33;
     color: white;
     border-radius: 15px;
     width: 100%;
+    border: none;
+    font-size: medium;
+    cursor: pointer;
   }
 }

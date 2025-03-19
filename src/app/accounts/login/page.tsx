@@ -70,7 +70,7 @@ const Login = () => {
       return;
     }
 
-    if (auth.currentUser) {
+    if (user && auth.currentUser) {
       try {
         await updateProfile(auth.currentUser, {
           displayName: newUserName,
@@ -103,7 +103,7 @@ const Login = () => {
     }
   };
 
-  const isSignIn = !!user.id; //Boolean()と同じ意味
+  const isSignIn = !!user; //Boolean()と同じ意味
 
   return (
     <div className={style.container}>
@@ -119,17 +119,19 @@ const Login = () => {
                 <div className={style.prfText}>
                   <div className={style.prfHead}>id:</div>
                   <div className={style.prfBody}>
-                    {user.id ? user.id : "guest"}
+                    {user ? user.id : "guest"}
                   </div>
                 </div>
                 <div className={style.prfText}>
                   <div className={style.prfHead}>name:</div>
-                  <div className={style.prfBody}>{user.username}</div>
+                  <div className={style.prfBody}>
+                    {user ? user.username : "guest"}
+                  </div>
                 </div>
                 <div className={style.prfText}>
                   <div className={style.prfHead}>email:</div>
                   <div className={style.prfBody}>
-                    {user.email ? user.email : "guest@gmai.com"}
+                    {user ? user.email : "guest@gmai.com"}
                   </div>
                 </div>
               </div>

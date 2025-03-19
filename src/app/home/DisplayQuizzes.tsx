@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { auth, db } from "@/firebase";
+import { db } from "@/firebase";
 import Link from "next/link";
 import { Quiz } from "@/interface/Quiz";
 import { QuizWithId } from "@/interface/QuizWithId";
 import style from "./Display.module.css";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/AuthContext";
 
 //OmitでimportしたQuizを再利用できるかも
 
 export const DisplayQuizzes = ({ category }: { category: string }) => {
-  const isSignIn = auth.currentUser;
+  const router = useRouter();
+  const { user } = useAuth();
+  const isSignIn = !!user;
+  console.log("ログインしてるかどうか", isSignIn);
+  console.log("ログインしてるかどうか", user);
 
   const [quizzes, setQuizzes] = useState<QuizWithId[]>([]);
   useEffect(() => {
@@ -28,6 +34,14 @@ export const DisplayQuizzes = ({ category }: { category: string }) => {
     fetchQuizzes();
   }, [category]);
 
+  const handleNavigation = () => {
+    if (isSignIn) {
+      router.push(`./quiz/multiplayer/${category}`);
+    } else {
+      alert("ログインが必要です");
+    }
+  };
+
   console.log("Q", quizzes);
   return (
     <div className={style.container}>
@@ -45,11 +59,7 @@ export const DisplayQuizzes = ({ category }: { category: string }) => {
                   <p>選択したカテゴリの問題がランダムに出題されます</p>
                 </div>
                 <div className={style.multiBtn}>
-                  <Link
-                    href={isSignIn ? `./quiz/multiplayer/${category}` : "#"}
-                  >
-                    入室
-                  </Link>
+                  <button onClick={handleNavigation}>入室</button>
                 </div>
               </div>
             </div>

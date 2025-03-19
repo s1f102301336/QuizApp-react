@@ -11,8 +11,8 @@ import {
 } from "react";
 
 interface AuthContextType {
-  user: User;
-  setUser: (user: User) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,6 +26,8 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
@@ -35,18 +37,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           email: firebaseUser.email || "",
         });
       } else {
-        setUser({ id: "", username: "ゲスト", email: "" });
+        setUser(null);
       }
+      console.log("ユーザの有無：", user);
+      console.log("ユーザの情報：", firebaseUser);
     });
 
     return () => unsubscribe();
   }, []);
 
-  const [user, setUser] = useState<User>({
-    id: "",
-    username: "ゲスト",
-    email: "",
-  });
   const contextValue = { user, setUser };
 
   return (
