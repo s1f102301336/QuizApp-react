@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import style from "./Header.module.css";
 import Image from "next/image";
 import Logo from "../../public/Logo_2.png";
@@ -17,6 +17,8 @@ export const Header = ({ isLogo, page }: { isLogo: boolean; page: Page }) => {
   const router = useRouter();
   const { user } = useAuth();
   const isSignIn = !!user;
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const handleNavigation = () => {
     if (isSignIn) {
       router.push("/quiz/create");
@@ -24,15 +26,27 @@ export const Header = ({ isLogo, page }: { isLogo: boolean; page: Page }) => {
       alert("ログインが必要です");
     }
   };
+
   return (
     <div className={style.container}>
+      {/* ロゴ部分 */}
       {isLogo && (
         <div className={style.text}>
           <Image src={Logo} alt="Logo Icon" className={style.logo} />
           <div className={`${jost.className} ${style.appName}`}>Quiz Dash</div>
         </div>
       )}
-      <div className={style.menu}>
+
+      {/* ハンバーガーボタン (スマホ用) */}
+      <button
+        className={style.hamburger}
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        ☰
+      </button>
+
+      {/* メニュー */}
+      <div className={`${style.menu} ${menuOpen ? style.open : ""}`}>
         <div className={style.menuBody}>
           {page === "home" ? (
             <>
@@ -48,7 +62,7 @@ export const Header = ({ isLogo, page }: { isLogo: boolean; page: Page }) => {
               ホーム
             </Link>
           ) : (
-            <div></div> //playページでは表示しない
+            <div></div> // playページでは表示しない
           )}
         </div>
       </div>
