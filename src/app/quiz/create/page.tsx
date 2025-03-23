@@ -5,6 +5,7 @@ import { db } from "../../../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { Quiz } from "@/interface/Quiz";
 import style from "./Create.module.css";
+import { Header } from "@/components/Header";
 
 const Create = () => {
   const [numSelect, setNumSelect] = useState<number>(4);
@@ -39,6 +40,7 @@ const Create = () => {
 
   return (
     <div className={style.container}>
+      <Header isLogo={true} page={"other"} />
       <form name="formQuiz" onSubmit={SubmitQuiz}>
         <label htmlFor="category">カテゴリ</label>
         <select id="category" name="category">

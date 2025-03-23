@@ -90,8 +90,8 @@ const Multiplayer = () => {
 
           const newUser = {
             user2: {
-              id: user.id,
-              name: user.username,
+              id: user?.id,
+              name: user?.username,
             },
           };
           await update(roomRef, newUser);
@@ -135,8 +135,8 @@ const Multiplayer = () => {
         await set(roomRef, {
           roomId: roomId,
           user1: {
-            id: user.id,
-            name: user.username,
+            id: user?.id,
+            name: user?.username,
           },
           quizzesData: quizzesData,
           isGameStarted: false,
@@ -185,7 +185,7 @@ const Multiplayer = () => {
 
   return (
     <div>
-      <Header />
+      <Header isLogo={true} page={"play"} />
       <div>
         roomData:{roomData ? JSON.stringify(roomData, null, 2) : "No Data"}
       </div>
