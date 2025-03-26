@@ -1,0 +1,49 @@
+.container {
+  background-color: #336ce5;
+  height: 100vh;
+}
+
+.body {
+  background-color: #eff4ff;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  padding: 5%;
+}
+
+.createCard {
+  background-color: white;
+  width: 80%;
+  height: auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.formFormat {
+  display: flex;
+  flex-direction: column;
+}
+
+.choiceBlock {
+  display: flex;
+  flex-direction: row;
+}
+.textBlock {
+  margin: 5% 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.textLabel {
+  text-align: start;
+  margin: 5% 0;
+}
+
+.textInput {
+  background-color: #eff4ff;
+  border: solid 1px gray;
+  border-radius: 3px;
+}

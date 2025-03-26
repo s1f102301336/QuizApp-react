@@ -41,56 +41,128 @@ const Create = () => {
   return (
     <div className={style.container}>
       <Header isLogo={true} page={"other"} />
-      <form name="formQuiz" onSubmit={SubmitQuiz}>
-        <label htmlFor="category">カテゴリ</label>
-        <select id="category" name="category">
-          <option value="">選択してください</option>
-          <option value="Anime_Manga">アニメ/漫画</option>
-          <option value="Games">ゲーム</option>
-          <option value="Music">音楽</option>
-          <option value="History">歴史</option>
-          <option value="Math">数学</option>
-          <option value="Science">理科</option>
-          <option value="Literature">文学</option>
-          <option value="Other">その他</option>
-        </select>
-        <label htmlFor="title">タイトル</label>
-        <input type="text" id="title" name="title" required />
-        <label htmlFor="description">説明</label>
-        <input type="text" id="description" name="description" />
-        <label htmlFor="question">問題</label>
-        <input type="text" id="question" name="question" />
-        <label htmlFor="numSelect">選択肢の数</label>
-        <select
-          id="numSelect"
-          value={numSelect} //selectのデフォルト値をstate流用
-          onChange={(e) => setNumSelect(Number(e.currentTarget.value))} //型変換（as numberだと型をみなすだけで実際に変換しないので危険）
-        >
-          <option value="2">2</option>
-          <option value="4">4</option>
-          <option value="6">6</option>
-        </select>
-
-        {
-          //選択肢の数だけ入力欄を用意
-          //jsxではforEachなので空配列の長さを用いてrange
-          [...Array(numSelect)].map((_, i) => (
-            <div key={i}>
-              <label htmlFor={`choice${i}`}>選択肢{i + 1}</label>
-              <input
-                type="checkbox"
-                id={`isCorrect${i}`}
-                name={`isCorrect${i}`}
-              />
-              <input type="text" id={`choice${i}`} name={`choice${i}`} />
+      <div className={style.body}>
+        <div className={style.createCard}>
+          <form
+            name="formQuiz"
+            onSubmit={SubmitQuiz}
+            className={style.formFormat}
+          >
+            <div className={style.textBlock}>
+              <div className={style.choiceBlock}>
+                <label className={style.textLabel} htmlFor="category">
+                  カテゴリ
+                </label>
+                <select id="category" name="category" required>
+                  <option value="">選択してください</option>
+                  <option value="Anime_Manga">アニメ/漫画</option>
+                  <option value="Games">ゲーム</option>
+                  <option value="Music">音楽</option>
+                  <option value="History">歴史</option>
+                  <option value="Math">数学</option>
+                  <option value="Science">理科</option>
+                  <option value="Literature">文学</option>
+                  <option value="Other">その他</option>
+                </select>
+              </div>
             </div>
-          ))
-        }
+            <hr />
+            <div className={style.textBlock}>
+              <label className={style.textLabel} htmlFor="title">
+                タイトル
+              </label>
+              <input
+                className={style.textInput}
+                type="text"
+                id="title"
+                name="title"
+                required
+              />
+            </div>
+            <hr />
+            <div className={style.textBlock}>
+              <label className={style.textLabel} htmlFor="description">
+                説明
+              </label>
+              <input
+                className={style.textInput}
+                type="text"
+                id="description"
+                name="description"
+              />
+            </div>
+            <hr />
+            <div className={style.textBlock}>
+              <label className={style.textLabel} htmlFor="question">
+                問題
+              </label>
+              <input
+                className={style.textInput}
+                type="text"
+                id="question"
+                name="question"
+              />
+            </div>
+            <hr />
+            <div className={style.textBlock}>
+              <div className={style.textLabel}>選択肢</div>
+              <div className={style.choiceBlock}>
+                <label className={style.textLabel} htmlFor="numSelect">
+                  選択肢の数
+                </label>
+                <select
+                  id="numSelect"
+                  value={numSelect} //selectのデフォルト値をstate流用
+                  onChange={(e) => setNumSelect(Number(e.currentTarget.value))} //型変換（as numberだと型をみなすだけで実際に変換しないので危険）
+                >
+                  <option value="2">2</option>
+                  <option value="4">4</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+              <div>正解の選択肢にチェックを入れてください</div>
+            </div>
 
-        <label htmlFor="explanation">解説</label>
-        <input type="text" id="explanation" name="explanation" />
-        <button type="submit">作成</button>
-      </form>
+            {
+              //選択肢の数だけ入力欄を用意
+              //jsxではforEachなので空配列の長さを用いてrange
+              [...Array(numSelect)].map((_, i) => (
+                <div key={i}>
+                  <label className={style.textLabel} htmlFor={`choice${i}`}>
+                    選択肢{i + 1}
+                  </label>
+                  <input
+                    type="checkbox"
+                    id={`isCorrect${i}`}
+                    name={`isCorrect${i}`}
+                  />
+                  <input
+                    className={style.textInput}
+                    type="text"
+                    id={`choice${i}`}
+                    name={`choice${i}`}
+                  />
+                </div>
+              ))
+            }
+            <hr />
+
+            <div className={style.textBlock}>
+              <label className={style.textLabel} htmlFor="explanation">
+                解説
+              </label>
+              <input
+                className={style.textInput}
+                type="text"
+                id="explanation"
+                name="explanation"
+              />
+            </div>
+            <hr />
+            <button type="submit">作成</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
