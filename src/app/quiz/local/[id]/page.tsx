@@ -74,8 +74,8 @@ const Local = () => {
                 </div>
               </div>
               <div className={styles.questionCard}>
-                <div className={styles.question}>問題</div>
-                <div>{quiz.question}</div>
+                <div className={styles.qTitle}>問題</div>
+                <div className={styles.qDetail}>{quiz.question}</div>
               </div>
 
               <div className={styles.choiceCard}>
@@ -94,8 +94,8 @@ const Local = () => {
                 <div>
                   <div>{answer ? "正解" : "不正解"}</div>
                   <div className={styles.expCard}>
-                    <div>解説</div>
-                    <div>{quiz.explanation}</div>
+                    <div className={styles.qTitle}>解説</div>
+                    <div className={styles.qDetail}>{quiz.explanation}</div>
                   </div>
                 </div>
               )}

@@ -1,12 +1,13 @@
 .container {
   background-color: #336ce5;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .body {
   background-color: #eff4ff;
-  height: 100vh;
+  min-height: 100vh;
   padding: 5%;
+  margin: 0;
 }
 
 .mainCard {
@@ -53,13 +54,24 @@
   background-color: white;
   width: 70%;
   height: auto;
-  text-align: center;
   display: flex;
   justify-content: center;
   border-radius: 10px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   flex-direction: column;
   margin: auto;
+  font-weight: bold;
+  padding: 1%;
+  .qTitle {
+    font-size: x-large;
+  }
+
+  .qDetail {
+    font-size: large;
+  }
+}
+
+.questionCard {
 }
 
 .choiceCard {

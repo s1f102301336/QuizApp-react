@@ -42,7 +42,7 @@
 .tab1 label:has(:checked) {
   background-color: #fff;
   border-color: #336ce5 #f0f0f0 #fff;
-  border-styles: solid;
+  border-style: solid;
   border-width: 4px 1px 1px;
   border-radius: 5px;
   color: #636363;
