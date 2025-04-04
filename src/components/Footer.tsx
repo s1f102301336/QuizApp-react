@@ -1,14 +1,17 @@
 import React from "react";
-import style from "./Footer.module.css";
+import styles from "./Footer.module.css";
 import { Jost } from "next/font/google";
 
 const jost = Jost({ subsets: ["latin"], weight: ["700"] });
 
 export const Footer = () => {
   return (
-    <footer className={style.footer2}>
+    <footer className={styles.footer2}>
       <a href="#">
-        <svg className={style.footer2__logo} xmlns="http://www.w3.org/2000/svg">
+        <svg
+          className={styles.footer2__logo}
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <text
             x="10"
             y="20"
@@ -21,11 +24,11 @@ export const Footer = () => {
         </svg>
       </a>
       <nav>
-        <ul className={style.footer2__list}>
+        <ul className={styles.footer2__list}>
           <li>
             <a href="#">
               <svg
-                className={style.footer2__snsIcon}
+                className={styles.footer2__snsIcon}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -39,7 +42,7 @@ export const Footer = () => {
           <li>
             <a href="#">
               <svg
-                className={style.footer2__snsIcon}
+                className={styles.footer2__snsIcon}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -53,7 +56,7 @@ export const Footer = () => {
           <li>
             <a href="#">
               <svg
-                className={style.footer2__snsIcon}
+                className={styles.footer2__snsIcon}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -67,7 +70,7 @@ export const Footer = () => {
           <li>
             <a href="#">
               <svg
-                className={style.footer2__snsIcon}
+                className={styles.footer2__snsIcon}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -81,7 +84,7 @@ export const Footer = () => {
           <li>
             <a href="#">
               <svg
-                className={style.footer2__snsIcon}
+                className={styles.footer2__snsIcon}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -94,7 +97,7 @@ export const Footer = () => {
           </li>
         </ul>
       </nav>
-      <p className={style.footer2__copyright}>@ 2025 Quiz Dash</p>
+      <p className={styles.footer2__copyright}>@ 2025 Quiz Dash</p>
     </footer>
   );
 };

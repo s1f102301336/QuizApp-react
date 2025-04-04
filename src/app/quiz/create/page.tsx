@@ -4,7 +4,7 @@ import { useState } from "react";
 import { db } from "../../../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { Quiz } from "@/interface/Quiz";
-import style from "./Create.module.css";
+import styles from "./Create.module.css";
 import { Header } from "@/components/Header";
 
 const Create = () => {
@@ -39,18 +39,18 @@ const Create = () => {
   };
 
   return (
-    <div className={style.container}>
+    <div className={styles.container}>
       <Header isLogo={true} page={"other"} />
-      <div className={style.body}>
-        <div className={style.createCard}>
+      <div className={styles.body}>
+        <div className={styles.createCard}>
           <form
             name="formQuiz"
             onSubmit={SubmitQuiz}
-            className={style.formFormat}
+            className={styles.formFormat}
           >
-            <div className={style.textBlock}>
-              <div className={style.choiceBlock}>
-                <label className={style.textLabel} htmlFor="category">
+            <div className={styles.textBlock}>
+              <div className={styles.choiceBlock}>
+                <label className={styles.textLabel} htmlFor="category">
                   カテゴリ
                 </label>
                 <select id="category" name="category" required>
@@ -67,12 +67,12 @@ const Create = () => {
               </div>
             </div>
             <hr />
-            <div className={style.textBlock}>
-              <label className={style.textLabel} htmlFor="title">
+            <div className={styles.textBlock}>
+              <label className={styles.textLabel} htmlFor="title">
                 タイトル
               </label>
               <input
-                className={style.textInput}
+                className={styles.textInput}
                 type="text"
                 id="title"
                 name="title"
@@ -80,34 +80,34 @@ const Create = () => {
               />
             </div>
             <hr />
-            <div className={style.textBlock}>
-              <label className={style.textLabel} htmlFor="description">
+            <div className={styles.textBlock}>
+              <label className={styles.textLabel} htmlFor="description">
                 説明
               </label>
               <input
-                className={style.textInput}
+                className={styles.textInput}
                 type="text"
                 id="description"
                 name="description"
               />
             </div>
             <hr />
-            <div className={style.textBlock}>
-              <label className={style.textLabel} htmlFor="question">
+            <div className={styles.textBlock}>
+              <label className={styles.textLabel} htmlFor="question">
                 問題
               </label>
               <input
-                className={style.textInput}
+                className={styles.textInput}
                 type="text"
                 id="question"
                 name="question"
               />
             </div>
             <hr />
-            <div className={style.textBlock}>
-              <div className={style.textLabel}>選択肢</div>
-              <div className={style.choiceBlock}>
-                <label className={style.textLabel} htmlFor="numSelect">
+            <div className={styles.textBlock}>
+              <div className={styles.textLabel}>選択肢</div>
+              <div className={styles.choiceBlock}>
+                <label className={styles.textLabel} htmlFor="numSelect">
                   選択肢の数
                 </label>
                 <select
@@ -128,7 +128,7 @@ const Create = () => {
               //jsxではforEachなので空配列の長さを用いてrange
               [...Array(numSelect)].map((_, i) => (
                 <div key={i}>
-                  <label className={style.textLabel} htmlFor={`choice${i}`}>
+                  <label className={styles.textLabel} htmlFor={`choice${i}`}>
                     選択肢{i + 1}
                   </label>
                   <input
@@ -137,7 +137,7 @@ const Create = () => {
                     name={`isCorrect${i}`}
                   />
                   <input
-                    className={style.textInput}
+                    className={styles.textInput}
                     type="text"
                     id={`choice${i}`}
                     name={`choice${i}`}
@@ -147,12 +147,12 @@ const Create = () => {
             }
             <hr />
 
-            <div className={style.textBlock}>
-              <label className={style.textLabel} htmlFor="explanation">
+            <div className={styles.textBlock}>
+              <label className={styles.textLabel} htmlFor="explanation">
                 解説
               </label>
               <input
-                className={style.textInput}
+                className={styles.textInput}
                 type="text"
                 id="explanation"
                 name="explanation"

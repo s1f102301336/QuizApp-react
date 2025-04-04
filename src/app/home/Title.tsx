@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./Title.module.css";
+import styles from "./Title.module.css";
 import { Form } from "@/components/Form";
 import Image from "next/image";
 import Logo from "../../../public/Logo_2.png";
@@ -9,11 +9,11 @@ const jost = Jost({ subsets: ["latin"], weight: ["700"] });
 
 export const Title = () => {
   return (
-    <div className={style.container}>
-      <div className={style.body}>
-        <div className={style.text}>
-          <Image src={Logo} alt="Logo Icon" className={style.logo} />
-          <div className={`${jost.className} ${style.appName}`}>Quiz Dash</div>
+    <div className={styles.container}>
+      <div className={styles.body}>
+        <div className={styles.text}>
+          <Image src={Logo} alt="Logo Icon" className={styles.logo} />
+          <div className={`${jost.className} ${styles.appName}`}>Quiz Dash</div>
         </div>
         <Form />
       </div>

@@ -4,7 +4,7 @@ import { db } from "@/firebase";
 import Link from "next/link";
 import { Quiz } from "@/interface/Quiz";
 import { QuizWithId } from "@/interface/QuizWithId";
-import style from "./Display.module.css";
+import styles from "./Display.module.css";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/AuthContext";
 
@@ -44,21 +44,21 @@ export const DisplayQuizzes = ({ category }: { category: string }) => {
 
   console.log("Q", quizzes);
   return (
-    <div className={style.container}>
-      <div className={style.displayContainer}>
+    <div className={styles.container}>
+      <div className={styles.displayContainer}>
         {
           //とりあえず1問だけ
           //このままリンクにするか、Comportsとして包括し、スライドショーにするか
-          <div className={style.multiContainer}>
-            <div className={style.multiBody}>
+          <div className={styles.multiContainer}>
+            <div className={styles.multiBody}>
               <h2>バトルマッチ</h2>
-              <div className={style.multiCard}>
+              <div className={styles.multiCard}>
                 <div>
                   <h3>対戦部屋</h3>
                   <div>カテゴリ：{category}</div>
                   <p>選択したカテゴリの問題がランダムに出題されます</p>
                 </div>
-                <div className={style.multiBtn}>
+                <div className={styles.multiBtn}>
                   <button onClick={handleNavigation}>入室</button>
                 </div>
               </div>
@@ -66,20 +66,20 @@ export const DisplayQuizzes = ({ category }: { category: string }) => {
             {/* ログインしてない人は無効にし、popup的なもので催促 */}
           </div>
         }
-        <div className={style.localContainer}>
-          <div className={style.localBody}>
+        <div className={styles.localContainer}>
+          <div className={styles.localBody}>
             <h2>シングルマッチ</h2>
             <div>
               {quizzes
                 .filter((q) => category === "ALL" || q.category === category)
                 .map((quiz) => (
-                  <div key={quiz.id} className={style.localCard}>
+                  <div key={quiz.id} className={styles.localCard}>
                     <div>
                       <h3>{quiz.title}</h3>
                       <p>{quiz.description}</p>
                     </div>
                     {/* Localではランダム値idで識別 */}
-                    <div className={style.localBtn}>
+                    <div className={styles.localBtn}>
                       <Link href={`./quiz/local/${quiz.id}`}>入室</Link>
                     </div>
                   </div>

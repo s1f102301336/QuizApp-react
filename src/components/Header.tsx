@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import style from "./Header.module.css";
+import styles from "./Header.module.css";
 import Image from "next/image";
 import Logo from "../../public/Logo_2.png";
 import { Jost } from "next/font/google";
@@ -28,37 +28,37 @@ export const Header = ({ isLogo, page }: { isLogo: boolean; page: Page }) => {
   };
 
   return (
-    <div className={style.container}>
+    <div className={styles.container}>
       {/* ロゴ部分 */}
       {isLogo && (
-        <div className={style.text}>
-          <Image src={Logo} alt="Logo Icon" className={style.logo} />
-          <div className={`${jost.className} ${style.appName}`}>Quiz Dash</div>
+        <div className={styles.text}>
+          <Image src={Logo} alt="Logo Icon" className={styles.logo} />
+          <div className={`${jost.className} ${styles.appName}`}>Quiz Dash</div>
         </div>
       )}
 
       {/* ハンバーガーボタン (スマホ用) */}
       <button
-        className={style.hamburger}
+        className={styles.hamburger}
         onClick={() => setMenuOpen(!menuOpen)}
       >
         ☰
       </button>
 
       {/* メニュー */}
-      <div className={`${style.menu} ${menuOpen ? style.open : ""}`}>
-        <div className={style.menuBody}>
+      <div className={`${styles.menu} ${menuOpen ? styles.open : ""}`}>
+        <div className={styles.menuBody}>
           {page === "home" ? (
             <>
-              <div onClick={handleNavigation} className={style.btn}>
+              <div onClick={handleNavigation} className={styles.btn}>
                 クイズ作成
               </div>
-              <Link href={"/accounts/login"} className={style.btn}>
+              <Link href={"/accounts/login"} className={styles.btn}>
                 マイページ
               </Link>
             </>
           ) : page === "other" ? (
-            <Link href="/" className={style.btn}>
+            <Link href="/" className={styles.btn}>
               ホーム
             </Link>
           ) : (

@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
 import React from "react";
-import style from "./login.module.css";
+import styles from "./login.module.css";
 import Image from "next/image";
 import Logo from "../../../../public/Logo_2.png";
 import { Footer } from "@/components/Footer";
@@ -106,31 +106,31 @@ const Login = () => {
   const isSignIn = !!user; //Boolean()と同じ意味
 
   return (
-    <div className={style.container}>
+    <div className={styles.container}>
       <Header isLogo={true} page={"other"} />
 
-      <div className={style.body}>
-        <div className={style.profileCard}>
+      <div className={styles.body}>
+        <div className={styles.profileCard}>
           <div>
             <div>
-              <Image src={Logo} alt="Logo Icon" className={style.logo} />
+              <Image src={Logo} alt="Logo Icon" className={styles.logo} />
               <div>プロフィール</div>
               <div>
-                <div className={style.prfText}>
-                  <div className={style.prfHead}>id:</div>
-                  <div className={style.prfBody}>
+                <div className={styles.prfText}>
+                  <div className={styles.prfHead}>id:</div>
+                  <div className={styles.prfBody}>
                     {user ? user.id : "guest"}
                   </div>
                 </div>
-                <div className={style.prfText}>
-                  <div className={style.prfHead}>name:</div>
-                  <div className={style.prfBody}>
+                <div className={styles.prfText}>
+                  <div className={styles.prfHead}>name:</div>
+                  <div className={styles.prfBody}>
                     {user ? user.username : "guest"}
                   </div>
                 </div>
-                <div className={style.prfText}>
-                  <div className={style.prfHead}>email:</div>
-                  <div className={style.prfBody}>
+                <div className={styles.prfText}>
+                  <div className={styles.prfHead}>email:</div>
+                  <div className={styles.prfBody}>
                     {user ? user.email : "guest@gmai.com"}
                   </div>
                 </div>
@@ -154,7 +154,7 @@ const Login = () => {
             </div>
             {/* 以下はただユーザー名を設定するだけの機能にする */}
             {isSignIn && (
-              <div className={style.optionSignIn}>
+              <div className={styles.optionSignIn}>
                 <form onSubmit={handleSubmit} method="post">
                   <label htmlFor="name">ユーザー名を変更：</label>
                   <input type="text" name="name" />
@@ -162,10 +162,10 @@ const Login = () => {
                   <input type="image" src="#" alt="icon" name="icon"/> */}
                   <button type="submit">登録</button>
                 </form>
-                <div className={style.signOut}>
+                <div className={styles.signOut}>
                   <div onClick={SignOut}>サインアウト</div>
                 </div>
-                <div className={style.delete}>
+                <div className={styles.delete}>
                   <div onClick={handleDelete}>アカウントを削除</div>
                 </div>
               </div>

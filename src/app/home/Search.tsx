@@ -1,4 +1,4 @@
-import style from "./Search.module.css";
+import styles from "./Search.module.css";
 
 export const Search = ({
   category,
@@ -20,7 +20,7 @@ export const Search = ({
   };
 
   return (
-    <div className={style.container}>
+    <div className={styles.container}>
       {/* <div>
         <select
           name="category"
@@ -40,7 +40,7 @@ export const Search = ({
         </select>
       </div> */}
 
-      <div className={style.tab1}>
+      <div className={styles.tab1}>
         {Object.entries(categories).map(([key, value]) => {
           return (
             <label key={key}>

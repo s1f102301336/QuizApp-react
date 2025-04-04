@@ -16,6 +16,7 @@
   box-sizing: border-box;
   font-size: 1em;
   outline: none;
+  background-color: white;
 }
 
 .searchForm input::placeholder {

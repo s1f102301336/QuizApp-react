@@ -1,13 +1,13 @@
 import React from "react";
-import style from "./GoogleBtn.module.css";
+import styles from "./GoogleBtn.module.css";
 
 export const GoogleBtn = () => {
   return (
     <div>
-      <button className={style.gsiMaterialButton}>
-        <div className={style.gsiMaterialButtonState}></div>
-        <div className={style.gsiMaterialButtonContentWrapper}>
-          <div className={style.gsiMaterialButtonIcon}>
+      <button className={styles.gsiMaterialButton}>
+        <div className={styles.gsiMaterialButtonState}></div>
+        <div className={styles.gsiMaterialButtonContentWrapper}>
+          <div className={styles.gsiMaterialButtonIcon}>
             <svg
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ export const GoogleBtn = () => {
               <path fill="none" d="M0 0h48v48H0z"></path>
             </svg>
           </div>
-          <span className={style.gsiMaterialButtonContents}>
+          <span className={styles.gsiMaterialButtonContents}>
             Sign in with Google
           </span>
           <span style={{ display: "none" }}>Sign in with Google</span>

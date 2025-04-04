@@ -1,10 +1,10 @@
 import React from "react";
-import style from "./Form.module.css";
+import styles from "./Form.module.css";
 
 export const Form = () => {
   return (
     <div>
-      <form action="#" className={style.searchForm}>
+      <form action="#" className={styles.searchForm}>
         <label>
           <input type="text" placeholder="キーワードを入力"></input>
         </label>
