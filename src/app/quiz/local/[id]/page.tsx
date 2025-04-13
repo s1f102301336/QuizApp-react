@@ -80,11 +80,8 @@ const Local = () => {
 
               <div className={styles.choiceCard}>
                 {quiz.choices.map((c, i) => (
-                  <div key={i}>
-                    <button
-                      onClick={() => setAnswer(c.isCorrect)}
-                      className={styles.choiceBox}
-                    >
+                  <div key={i} className={styles.choiceBox}>
+                    <button onClick={() => setAnswer(c.isCorrect)}>
                       {c.text}
                     </button>
                   </div>

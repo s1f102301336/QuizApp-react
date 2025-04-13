@@ -50,9 +50,9 @@ export const Header = ({ isLogo, page }: { isLogo: boolean; page: Page }) => {
         <div className={styles.menuBody}>
           {page === "home" ? (
             <>
-              <div onClick={handleNavigation} className={styles.btn}>
+              <button onClick={handleNavigation} className={styles.btn}>
                 クイズ作成
-              </div>
+              </button>
               <Link href={"/accounts/login"} className={styles.btn}>
                 マイページ
               </Link>
