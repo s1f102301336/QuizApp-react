@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import styles from "./local.module.css";
 import { Footer } from "@/components/Footer";
+import Link from "next/link";
 
 //ディレクトリが[id]の際、{params}:{params:{id:string}}でパラメータを取得可能
 // interface Props {
@@ -59,18 +60,16 @@ const Local = () => {
       <div className={styles.body}>
         {quiz && (
           <div className={styles.mainCard}>
-            <div>
-              <div className={styles.headCard}>
-                <div className={styles.stateQuiz}>
-                  <div className={styles.myPoint}>自分のポイント：</div>
-                  <div className={styles.oppPoint}>相手のポイント：</div>
-                  <div className={styles.timeLimit}>残り時間：</div>
-                </div>
-                <div className={styles.titleCard}>
-                  <div className={styles.category}>{quiz.category}</div>
-                  <div className={styles.title}>{quiz.title}</div>
-                  <div className={styles.desc}>{quiz.description}</div>
-                </div>
+            <div className={styles.headCard}>
+              <div className={styles.stateQuiz}>
+                <div className={styles.myPoint}>自分のポイント：</div>
+                <div className={styles.oppPoint}>相手のポイント：</div>
+                <div className={styles.timeLimit}>残り時間：</div>
+              </div>
+              <div className={styles.titleCard}>
+                <div className={styles.category}>{quiz.category}</div>
+                <div className={styles.title}>{quiz.title}</div>
+                <div className={styles.desc}>{quiz.description}</div>
               </div>
             </div>
             <div className={styles.questionCard}>
@@ -93,12 +92,19 @@ const Local = () => {
             </div>
 
             {answer !== null && (
-              <div className={styles.expCard}>
-                <div className={styles.qTitle}>
-                  {answer ? "正解" : "不正解"}
+              <div>
+                <div className={styles.expCard}>
+                  <div className={styles.qTitle}>
+                    {answer ? "正解" : "不正解"}
+                  </div>
+                  <div>解説</div>
+                  <div className={styles.qDetail}>{quiz.explanation}</div>
                 </div>
-                <div>解説</div>
-                <div className={styles.qDetail}>{quiz.explanation}</div>
+                <div className={styles.home}>
+                  <Link href="/" className={styles.homeBtn}>
+                    ホームへ戻る
+                  </Link>
+                </div>
               </div>
             )}
           </div>

@@ -20,6 +20,7 @@ import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { Quiz } from "@/interface/Quiz";
 import { useAuth } from "@/hooks/AuthContext";
 import { RoomData } from "@/interface/RoomData";
+import { Footer } from "@/components/Footer";
 
 const Multiplayer = () => {
   const params = useParams();
@@ -208,6 +209,7 @@ const Multiplayer = () => {
       <Link href="/">
         <button onClick={delDoc}>ホームに戻る</button>
       </Link>
+      <Footer />
     </div>
   );
 };

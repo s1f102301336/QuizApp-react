@@ -6,6 +6,7 @@ import { get, push, ref, update } from "firebase/database";
 import React, { useState } from "react";
 import { Results } from "./Results";
 import { RoomData } from "@/interface/RoomData";
+import styles from "./Start.module.css";
 
 interface Room {
   category: string;
@@ -99,23 +100,33 @@ export const Start = ({ category, userId, roomData }: Room) => {
   console.log("nowQuiz", nowQuiz);
 
   return (
-    <div>
+    <div className={styles.body}>
       <div>Start</div>
 
       {!gameSet ? (
         nowQuiz !== null ? (
-          <div>
+          <div className={styles.mainCard}>
+            <div className={styles.headCard}>
+              <div className={styles.titleCard}>
+                <div className={styles.category}>{nowQuiz.category}</div>
+                <div className={styles.title}>{nowQuiz.title}</div>
+                <div className={styles.desc}>{nowQuiz.description}</div>
+              </div>
+            </div>
             <div>今の添え字：{quizNum}</div>
-            <div>{nowQuiz.category}</div>
-            <div>{nowQuiz.title}</div>
-            <div>{nowQuiz.description}</div>
-            <div>{nowQuiz.question}</div>
-            <ul>
-              {nowQuiz.choices.map((c, j) => (
-                <div key={j}>
+
+            <div className={styles.questionCard}>
+              <div className={styles.qTitle}>問題</div>
+              <div className={styles.qDetail}>{nowQuiz.question}</div>
+            </div>
+
+            <div className={styles.choiceCard}>
+              <div className={styles.choices}>
+                {nowQuiz.choices.map((c, j) => (
                   <button
+                    key={j}
                     id={`choice-${j}`}
-                    className="choices"
+                    className={styles.btn}
                     onClick={(e) => {
                       userAnswer(e, c);
                     }}
@@ -123,16 +134,19 @@ export const Start = ({ category, userId, roomData }: Room) => {
                   >
                     {c.text}
                   </button>
-                </div>
-              ))}
-            </ul>
+                ))}
+              </div>
+            </div>
             {quizNum !== null && ansList.length > quizNum && (
               <div>
                 <div>
                   {ansList.slice(-1)[0].choiceCorrect ? "正解" : "不正解"}
                 </div>
                 <div>現在のポイント：{point}</div>
-                <div>{nowQuiz.explanation}</div>
+                <div className={styles.expCard}>
+                  <div>解説</div>
+                  <div className={styles.qDetail}>{nowQuiz.explanation}</div>
+                </div>
               </div>
             )}
             {quizNum !== null && oppAnsList.length > quizNum && (
