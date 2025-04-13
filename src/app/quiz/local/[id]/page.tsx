@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import styles from "./local.module.css";
+import { Footer } from "@/components/Footer";
 
 //ディレクトリが[id]の際、{params}:{params:{id:string}}でパラメータを取得可能
 // interface Props {
@@ -56,50 +57,55 @@ const Local = () => {
     <div className={styles.container}>
       <Header isLogo={true} page={answer === null ? "play" : "other"} />
       <div className={styles.body}>
-        <div className={styles.bodyCard}>
-          {quiz && (
-            <div className={styles.mainCard}>
-              <div>
-                <div className={styles.headCard}>
-                  <div className={styles.stateQuiz}>
-                    <div className={styles.myPoint}>自分のポイント：</div>
-                    <div className={styles.oppPoint}>相手のポイント：</div>
-                    <div className={styles.timeLimit}>残り時間：</div>
-                  </div>
-                  <div className={styles.titleCard}>
-                    <div className={styles.category}>{quiz.category}</div>
-                    <div className={styles.title}>{quiz.title}</div>
-                    <div className={styles.desc}>{quiz.description}</div>
-                  </div>
+        {quiz && (
+          <div className={styles.mainCard}>
+            <div>
+              <div className={styles.headCard}>
+                <div className={styles.stateQuiz}>
+                  <div className={styles.myPoint}>自分のポイント：</div>
+                  <div className={styles.oppPoint}>相手のポイント：</div>
+                  <div className={styles.timeLimit}>残り時間：</div>
+                </div>
+                <div className={styles.titleCard}>
+                  <div className={styles.category}>{quiz.category}</div>
+                  <div className={styles.title}>{quiz.title}</div>
+                  <div className={styles.desc}>{quiz.description}</div>
                 </div>
               </div>
-              <div className={styles.questionCard}>
-                <div className={styles.qTitle}>問題</div>
-                <div className={styles.qDetail}>{quiz.question}</div>
-              </div>
+            </div>
+            <div className={styles.questionCard}>
+              <div className={styles.qTitle}>問題</div>
+              <div className={styles.qDetail}>{quiz.question}</div>
+            </div>
 
-              <div className={styles.choiceCard}>
+            <div className={styles.choiceCard}>
+              <div className={styles.choices}>
                 {quiz.choices.map((c, i) => (
-                  <div key={i} className={styles.choiceBox}>
-                    <button onClick={() => setAnswer(c.isCorrect)}>
-                      {c.text}
-                    </button>
-                  </div>
+                  <button
+                    key={i}
+                    onClick={() => setAnswer(c.isCorrect)}
+                    className={styles.btn}
+                  >
+                    {c.text}
+                  </button>
                 ))}
               </div>
-              {answer !== null && (
-                <div>
-                  <div>{answer ? "正解" : "不正解"}</div>
-                  <div className={styles.expCard}>
-                    <div className={styles.qTitle}>解説</div>
-                    <div className={styles.qDetail}>{quiz.explanation}</div>
-                  </div>
-                </div>
-              )}
             </div>
-          )}
-        </div>
+
+            {answer !== null && (
+              <div className={styles.expCard}>
+                <div className={styles.qTitle}>
+                  {answer ? "正解" : "不正解"}
+                </div>
+                <div>解説</div>
+                <div className={styles.qDetail}>{quiz.explanation}</div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
+
+      <Footer />
     </div>
   );
 };
