@@ -1,12 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DisplayQuizzes } from "./DisplayQuizzes";
 import { Search } from "./Search";
 import { Title } from "./Title";
 import styles from "./QuizContainer.module.css";
+import { useHeader } from "@/hooks/HeaderContext";
 
 export const QuizContainer = () => {
+  const { setHeaderProps } = useHeader();
+
+  useEffect(() => {
+    setHeaderProps({ isLogo: false, page: "home" });
+  }, [setHeaderProps]);
+
   const [category, setCategory] = useState("ALL");
   return (
     <div>

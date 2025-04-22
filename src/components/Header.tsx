@@ -8,12 +8,13 @@ import Logo from "../../public/Logo_2.png";
 import { Jost } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/AuthContext";
+import { useHeader } from "@/hooks/HeaderContext";
 
 const jost = Jost({ subsets: ["latin"], weight: ["700"] });
 
-type Page = "home" | "play" | "other";
+export const Header = () => {
+  const { isLogo, page } = useHeader();
 
-export const Header = ({ isLogo, page }: { isLogo: boolean; page: Page }) => {
   const router = useRouter();
   const { user } = useAuth();
   const isSignIn = !!user;

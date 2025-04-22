@@ -13,14 +13,13 @@ import {
   DataSnapshot,
 } from "firebase/database";
 import React, { useEffect, useState } from "react";
-import { Header } from "@/components/Header";
 import { Start } from "./Start";
 import Link from "next/link";
 import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { Quiz } from "@/interface/Quiz";
 import { useAuth } from "@/hooks/AuthContext";
 import { RoomData } from "@/interface/RoomData";
-import { Footer } from "@/components/Footer";
+import { useHeader } from "@/hooks/HeaderContext";
 
 const Multiplayer = () => {
   const params = useParams();
@@ -31,11 +30,17 @@ const Multiplayer = () => {
   const { user } = useAuth();
   const roomRef = ref(rtdb, `rooms/${roomId}`);
 
+  const { setHeaderProps } = useHeader();
+
   const ready =
     roomData &&
     "user2" in roomData &&
     roomData.isGameStarted &&
     errorState === null;
+
+  useEffect(() => {
+    setHeaderProps({ isLogo: true, page: "play" });
+  }, []);
 
   //エラーチェック
   useEffect(() => {
@@ -186,7 +191,6 @@ const Multiplayer = () => {
 
   return (
     <div>
-      <Header isLogo={true} page={"play"} />
       <div>
         roomData:{roomData ? JSON.stringify(roomData, null, 2) : "No Data"}
       </div>
@@ -209,7 +213,6 @@ const Multiplayer = () => {
       <Link href="/">
         <button onClick={delDoc}>ホームに戻る</button>
       </Link>
-      <Footer />
     </div>
   );
 };

@@ -3,12 +3,11 @@
 import { db } from "@/firebase";
 import { Quiz } from "@/interface/Quiz";
 import { doc, getDoc } from "firebase/firestore";
-import { Header } from "@/components/Header";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import styles from "./local.module.css";
-import { Footer } from "@/components/Footer";
 import Link from "next/link";
+import { useHeader } from "@/hooks/HeaderContext";
 
 //ディレクトリが[id]の際、{params}:{params:{id:string}}でパラメータを取得可能
 // interface Props {
@@ -27,11 +26,18 @@ const Local = () => {
   const [answer, setAnswer] = useState<
     Quiz["choices"][number]["isCorrect"] | null
   >(null);
+
+  const { setHeaderProps } = useHeader();
+
   // const result = result && userSelect.isCorrect;
 
   // const userSelect = (choice: Quiz["choices"][number]) => {
   //   return
   // };
+
+  useEffect(() => {
+    setHeaderProps({ isLogo: true, page: answer === null ? "play" : "other" });
+  }, [setHeaderProps, answer]);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -56,7 +62,6 @@ const Local = () => {
 
   return (
     <div className={styles.container}>
-      <Header isLogo={true} page={answer === null ? "play" : "other"} />
       <div className={styles.body}>
         {quiz && (
           <div className={styles.mainCard}>
@@ -110,8 +115,6 @@ const Local = () => {
           </div>
         )}
       </div>
-
-      <Footer />
     </div>
   );
 };

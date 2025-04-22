@@ -1,14 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../../../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { Quiz } from "@/interface/Quiz";
 import styles from "./Create.module.css";
-import { Header } from "@/components/Header";
+import { useHeader } from "@/hooks/HeaderContext";
 
 const Create = () => {
   const [numSelect, setNumSelect] = useState<number>(4);
+
+  const { setHeaderProps } = useHeader();
+
+  useEffect(() => {
+    setHeaderProps({ isLogo: true, page: "other" });
+  }, []);
 
   const SubmitQuiz = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,7 +46,6 @@ const Create = () => {
 
   return (
     <div className={styles.container}>
-      <Header isLogo={true} page={"other"} />
       <div className={styles.body}>
         <div className={styles.createCard}>
           <form

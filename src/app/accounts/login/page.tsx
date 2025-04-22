@@ -11,16 +11,21 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./login.module.css";
 import Image from "next/image";
 import Logo from "../../../../public/Logo_2.png";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
 import { GoogleBtn } from "@/components/GoogleBtn";
+import { useHeader } from "@/hooks/HeaderContext";
 
 const Login = () => {
   const { user, setUser } = useAuth();
+
+  const { setHeaderProps } = useHeader();
+
+  useEffect(() => {
+    setHeaderProps({ isLogo: true, page: "other" });
+  }, []);
 
   const SignInWithGoogle = async () => {
     if (typeof window === "undefined") {
@@ -107,8 +112,6 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <Header isLogo={true} page={"other"} />
-
       <div className={styles.body}>
         <div className={styles.profileCard}>
           <div>
@@ -173,7 +176,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
