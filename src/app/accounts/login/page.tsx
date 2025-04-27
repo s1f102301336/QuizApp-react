@@ -160,7 +160,7 @@ const Login = () => {
               <div className={styles.optionSignIn}>
                 <form onSubmit={handleSubmit} method="post">
                   <label htmlFor="name">ユーザー名を変更：</label>
-                  <input type="text" name="name" />
+                  <input type="text" name="name" className={styles.input} />
                   {/* <label htmlFor="icon">アイコンを設定</label>
                   <input type="image" src="#" alt="icon" name="icon"/> */}
                   <button type="submit">登録</button>

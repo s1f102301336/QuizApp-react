@@ -67,3 +67,9 @@
     cursor: pointer;
   }
 }
+
+.input {
+  background-color: #eff4ff;
+  border: 1px solid black;
+  border-radius: 3px;
+}
