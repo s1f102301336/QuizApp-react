@@ -117,7 +117,7 @@ const Login = () => {
           <div>
             <div>
               <Image src={Logo} alt="Logo Icon" className={styles.logo} />
-              <div>プロフィール</div>
+              <div className={styles.prfName}>プロフィール</div>
               <div>
                 <div className={styles.prfText}>
                   <div className={styles.prfHead}>id:</div>
@@ -158,13 +158,21 @@ const Login = () => {
             {/* 以下はただユーザー名を設定するだけの機能にする */}
             {isSignIn && (
               <div className={styles.optionSignIn}>
-                <form onSubmit={handleSubmit} method="post">
-                  <label htmlFor="name">ユーザー名を変更：</label>
-                  <input type="text" name="name" className={styles.input} />
-                  {/* <label htmlFor="icon">アイコンを設定</label>
-                  <input type="image" src="#" alt="icon" name="icon"/> */}
-                  <button type="submit">登録</button>
-                </form>
+                <div className={styles.form}>
+                  <form
+                    onSubmit={handleSubmit}
+                    method="post"
+                    className={styles.formGroup}
+                  >
+                    <label htmlFor="name">ユーザー名を変更：</label>
+                    <input type="text" name="name" className={styles.input} />
+                    {/* <label htmlFor="icon">アイコンを設定</label>
+                    <input type="image" src="#" alt="icon" name="icon"/> */}
+                    <button type="submit" className={styles.submitButton}>
+                      登録
+                    </button>
+                  </form>
+                </div>
                 <div className={styles.signOut}>
                   <div onClick={SignOut}>サインアウト</div>
                 </div>

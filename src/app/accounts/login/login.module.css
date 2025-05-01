@@ -1,75 +1,99 @@
 .container {
-  background-color: #336ce5;
-  height: 100vh;
+  /* background: linear-gradient(to bottom, #336ce5, #4a90e2); */
+  background-color: #eff4ff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .body {
-  background-color: #eff4ff;
+  width: 100%;
   display: flex;
   justify-content: center;
-  height: 100vh;
-  padding: 5%;
+  padding: 2rem 1rem;
 }
 
 .profileCard {
-  background-color: white;
-  width: 80%;
-  height: auto;
-  text-align: center;
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 600px;
   display: flex;
-  justify-content: center;
-  border-radius: 10px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  gap: 2rem; /* 内部要素間にゆとりを持たせる */
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  width: 180px;
+  height: auto;
+}
+
+.prfName {
+  font-size: 1.4rem;
+  text-align: center;
+  color: #336ce5;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .prfText {
   display: flex;
-  padding: 3% 3% 3% 0;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .prfHead {
-  display: flex;
-  justify-content: start;
-  width: 10%;
+  font-weight: bold;
+  min-width: 80px;
 }
 
 .prfBody {
-  display: flex;
-  justify-content: center;
-  width: 90%;
+  word-break: break-all;
 }
 
 .optionSignIn {
-  padding-top: 5%;
-  text-align: center;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.signOut {
-  width: 40%;
-  margin: auto;
-  color: white;
-  border-radius: 15px;
-  padding: 1%;
-  margin-top: 5%;
-  background-color: #e98d33;
-  text-align: center;
-  :hover {
-    cursor: pointer;
-  }
-}
-
+.signOut,
 .delete {
-  color: red;
-  margin-top: 15%;
-  :hover {
-    background-color: red;
-    color: white;
-    cursor: pointer;
-  }
+  margin-top: 1rem;
+  color: #ff4d4f;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
 }
 
-.input {
-  background-color: #eff4ff;
-  border: 1px solid black;
-  border-radius: 3px;
+.signOut:hover,
+.delete:hover {
+  color: #254bb5;
+}
+
+.formGroup label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.submitButton {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background-color: #336ce5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #254bb5;
 }

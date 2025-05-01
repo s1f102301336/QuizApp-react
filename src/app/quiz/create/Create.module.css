@@ -1,5 +1,6 @@
 .container {
-  background: linear-gradient(to bottom, #336ce5, #4a90e2);
+  /* background: linear-gradient(to bottom, #336ce5, #4a90e2); */
+  background-color: #eff4ff;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -9,10 +10,11 @@
 .card {
   background: white;
   width: 90%;
-  max-width: 600px;
+  max-width: 1000px;
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 5% 0;
 }
 
 .title {
@@ -27,6 +29,13 @@
   flex-direction: column;
   gap: 1.5rem;
   color: #636363;
+  margin: 0 15%;
+}
+
+@media (max-width: 600px) {
+  .form {
+    margin: 0;
+  }
 }
 
 .formGroup {
