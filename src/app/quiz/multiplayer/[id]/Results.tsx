@@ -1,4 +1,5 @@
 import { RoomData } from "@/interface/RoomData";
+import styles from "./Results.module.css"; // CSSファイルをインポート
 import React from "react";
 
 interface Results {
@@ -18,11 +19,11 @@ export const Results = ({
   point,
   oppPoint,
 }: Results) => {
-  console.log("resultsInfo", userId, roomData, ansList, oppAnsList);
+  const result = point > oppPoint ? "WIN" : point < oppPoint ? "LOSE" : "DRAW";
 
   return (
-    <div>
-      <table>
+    <div className={styles.resultContainer}>
+      <table className={styles.resultTable}>
         <thead>
           <tr>
             <th></th>
@@ -32,24 +33,45 @@ export const Results = ({
         </thead>
         <tbody>
           {roomData.quizzesData?.map((_, i) => (
-            //jsx内ではreturnがないとReactNodeにできないので、mapかつ()が必要
             <tr key={i + 1}>
               <th>{`第${i + 1}問`}</th>
-              <td>{ansList[i].choiceCorrect ? "正解" : "不正解"}</td>
-              <td>{oppAnsList[i].choiceCorrect ? "正解" : "不正解"}</td>
+              <td
+                className={
+                  ansList[i].choiceCorrect ? styles.correct : styles.incorrect
+                }
+              >
+                {ansList[i].choiceCorrect ? "正解" : "不正解"}
+              </td>
+              <td
+                className={
+                  oppAnsList[i].choiceCorrect
+                    ? styles.correct
+                    : styles.incorrect
+                }
+              >
+                {oppAnsList[i].choiceCorrect ? "正解" : "不正解"}
+              </td>
             </tr>
           ))}
         </tbody>
         <tfoot>
-          <tr>
+          <tr className={styles.finalScoreRow}>
             <th>最終スコア</th>
             <td>{point}</td>
             <td>{oppPoint}</td>
           </tr>
         </tfoot>
       </table>
-      <div>
-        {point > oppPoint ? "WIN" : point - oppPoint === 0 ? "DRAW" : "LOSE"}
+      <div
+        className={`${styles.resultLabel} ${
+          result === "WIN"
+            ? styles.win
+            : result === "LOSE"
+            ? styles.lose
+            : styles.draw
+        }`}
+      >
+        {result}
       </div>
     </div>
   );
