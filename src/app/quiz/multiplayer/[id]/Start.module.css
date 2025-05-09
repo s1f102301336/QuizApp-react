@@ -30,13 +30,18 @@
 .titleCard {
   font-weight: bold;
   color: white;
-  padding: 1%;
+  padding: 1rem 1.5rem;
   background-color: #648de5;
   .category {
     text-align: center;
+    font-size: larger;
   }
   .title {
     font-size: xx-large;
+  }
+  .desc {
+    margin-top: 0.5rem;
+    font-size: larger;
   }
 }
 
@@ -104,8 +109,14 @@
   cursor: pointer;
 }
 
+.clickBtn,
 .btn:hover {
   background-color: #e98d33;
+}
+
+.disBtn {
+  pointer-events: none;
+  background-color: rgb(190, 190, 190);
 }
 
 .home {
@@ -125,6 +136,96 @@
 }
 
 .homeBtn:focus-visible {
+  outline: 2px solid #4a90e2;
+  outline-offset: 4px;
+  transition: outline-offset 0.2s ease;
+}
+
+.scoreContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.scoreCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+  background-color: #fff;
+  padding: 1rem 5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.scoreColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scoreBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scoreLabel {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.scoreValue {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #336ce5;
+}
+
+.judgeBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.judgeBadge {
+  padding: 0.4rem 1rem;
+  font-weight: bold;
+  border-radius: 999px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.correct {
+  background-color: #d1f7d1;
+  color: #238823;
+  border: 2px solid #238823;
+}
+
+.incorrect {
+  background-color: #ffe0e0;
+  color: #cc0000;
+  border: 2px solid #cc0000;
+}
+
+.nextBtnContainer {
+  display: flex;
+  justify-content: end;
+  margin-right: 10rem;
+}
+
+.nextBtn {
+  all: unset;
+  background-color: #648de5;
+  color: white;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.nextBtn:focus-visible {
   outline: 2px solid #4a90e2;
   outline-offset: 4px;
   transition: outline-offset 0.2s ease;

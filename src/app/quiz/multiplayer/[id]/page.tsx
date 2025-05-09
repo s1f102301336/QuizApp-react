@@ -44,7 +44,11 @@ const Multiplayer = () => {
 
   //エラーチェック
   useEffect(() => {
-    if (!roomData) return;
+    //useAuthよりもレンダリングが先になってしまうので、userが取れ次第firebaseへ登録
+    if (!roomData || !user) {
+      console.log("test return");
+      return;
+    }
     //同じユーザーが入ってきたときは無効
     if (
       roomData &&
@@ -71,12 +75,15 @@ const Multiplayer = () => {
         update(roomRef, { isGameStarted: true });
       }
     }
-  }, [roomData]);
+  }, [roomData, user]);
 
   useEffect(() => {
     //roomsコレクションのもとにroomIdドキュメントを作成
 
-    if (!roomId) return;
+    if (!user || !roomId) {
+      console.log("test2 return");
+      return;
+    }
 
     //部屋を作成・2人目は更新して参加
     const createRoom = async () => {
@@ -93,11 +100,15 @@ const Multiplayer = () => {
         } else {
           //2人目の場合
           console.log("2人目入室");
+          if (!user?.id || !user?.username) {
+            console.error("User data is not available");
+            return;
+          }
 
           const newUser = {
             user2: {
-              id: user?.id,
-              name: user?.username,
+              id: user?.id || "unknown",
+              name: user?.username || "anonymous",
             },
           };
           await update(roomRef, newUser);
@@ -191,9 +202,9 @@ const Multiplayer = () => {
 
   return (
     <div>
-      <div>
+      {/* <div>
         roomData:{roomData ? JSON.stringify(roomData, null, 2) : "No Data"}
-      </div>
+      </div> */}
       {errorState && yourId === 2 && (
         <div>
           <div style={{ color: "red" }}>{errorState}</div>

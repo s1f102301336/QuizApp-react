@@ -33,34 +33,37 @@ export const Start = ({ category, userId, roomData }: Room) => {
     e: React.MouseEvent<HTMLButtonElement>,
     c: Quiz["choices"][number]
   ) => {
-    const currentId = e.currentTarget.id;
-    disable(currentId);
-    const ansRef = ref(rtdb, `rooms/${category}/ans_user${userId}`);
-    const pointRef = ref(rtdb, `rooms/${category}/points`);
+    if (!nowChoice) {
+      const currentId = e.currentTarget.id;
+      disable(currentId);
+      const ansRef = ref(rtdb, `rooms/${category}/ans_user${userId}`);
+      const pointRef = ref(rtdb, `rooms/${category}/points`);
 
-    const answer = {
-      choiceText: c.text,
-      choiceCorrect: c.isCorrect,
-    };
+      const answer = {
+        choiceText: c.text,
+        choiceCorrect: c.isCorrect,
+      };
 
-    const newPoint = c.isCorrect ? point + 10 : Math.max(point - 10, 0); //0以下の時、0を返す
+      const newPoint = c.isCorrect ? point + 10 : Math.max(point - 10, 0); //0以下の時、0を返す
 
-    try {
-      await push(ansRef, answer);
-      await update(pointRef, { [`user${userId}`]: newPoint });
-      setPoint(newPoint);
-      setAnsList((prev) => [...prev, answer]);
-    } catch (error) {
-      console.error(error);
+      try {
+        await push(ansRef, answer);
+        await update(pointRef, { [`user${userId}`]: newPoint });
+        setPoint(newPoint);
+        setAnsList((prev) => [...prev, answer]);
+      } catch (error) {
+        console.error(error);
+      }
+      console.log("nowRoomData", (await get(ansRef)).val());
+      console.log("realRoomData", roomData);
     }
-    console.log("nowRoomData", (await get(ansRef)).val());
-    console.log("realRoomData", roomData);
   };
 
   //選択していない選択肢を無効にする関数
   const disable = (currentId: string) => {
     //query...はNodeList、getElement...はHTMLCollectionを返すので、配列操作をするなら前者が良い！
     setNowChoice(currentId);
+    //上記の状態により無効化
     console.log("disabledしてみた", currentId);
   };
 
@@ -101,19 +104,68 @@ export const Start = ({ category, userId, roomData }: Room) => {
 
   return (
     <div className={styles.body}>
-      <div>Start</div>
-
       {!gameSet ? (
         nowQuiz !== null ? (
           <div className={styles.mainCard}>
             <div className={styles.headCard}>
               <div className={styles.titleCard}>
-                <div className={styles.category}>{nowQuiz.category}</div>
+                <div className={styles.category}>
+                  {nowQuiz.category} : {quizNum}/{quizzes.length}
+                </div>
+
                 <div className={styles.title}>{nowQuiz.title}</div>
                 <div className={styles.desc}>{nowQuiz.description}</div>
+
+                <div className={styles.scoreContainer}>
+                  <div className={styles.scoreCard}>
+                    <div className={styles.scoreBox}>
+                      <div className={styles.scoreColumn}>
+                        <div className={styles.scoreLabel}>あなた</div>
+                        <div className={styles.scoreValue}>{point}</div>
+                        <div className={styles.judgeBox}>
+                          {quizNum !== null && ansList.length > quizNum && (
+                            <div
+                              className={`${styles.judgeBadge} ${
+                                ansList.slice(-1)[0].choiceCorrect
+                                  ? styles.correct
+                                  : styles.incorrect
+                              }`}
+                            >
+                              {ansList.slice(-1)[0].choiceCorrect
+                                ? "◯ 正解！"
+                                : "× 不正解"}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.scoreCard}>
+                    <div className={styles.scoreBox}>
+                      <div className={styles.scoreColumn}>
+                        <div className={styles.scoreLabel}>相手</div>
+                        <div className={styles.scoreValue}>{oppPoint}</div>
+                        <div className={styles.judgeBox}>
+                          {quizNum !== null && ansList.length > quizNum && (
+                            <div
+                              className={`${styles.judgeBadge} ${
+                                oppAnsList.slice(-1)[0]?.choiceCorrect
+                                  ? styles.correct
+                                  : styles.incorrect
+                              }`}
+                            >
+                              {oppAnsList.slice(-1)[0]?.choiceCorrect
+                                ? "◯ 正解"
+                                : "× 不正解"}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div>今の添え字：{quizNum}</div>
 
             <div className={styles.questionCard}>
               <div className={styles.qTitle}>問題</div>
@@ -122,22 +174,46 @@ export const Start = ({ category, userId, roomData }: Room) => {
 
             <div className={styles.choiceCard}>
               <div className={styles.choices}>
-                {nowQuiz.choices.map((c, j) => (
-                  <button
-                    key={j}
-                    id={`choice-${j}`}
-                    className={styles.btn}
-                    onClick={(e) => {
-                      userAnswer(e, c);
-                    }}
-                    disabled={nowChoice !== null && nowChoice !== `choice-${j}`}
-                  >
-                    {c.text}
-                  </button>
-                ))}
+                {nowQuiz.choices.map((c, j) => {
+                  const isClicked = nowChoice !== null;
+                  const isOther = nowChoice !== `choice-${j}`;
+
+                  const buttonClass =
+                    styles.btn +
+                    " " +
+                    (isClicked && isOther
+                      ? styles.disBtn
+                      : isClicked && !isOther
+                      ? styles.clickBtn
+                      : "");
+
+                  return (
+                    <button
+                      key={j}
+                      id={`choice-${j}`}
+                      className={buttonClass}
+                      onClick={(e) => {
+                        userAnswer(e, c);
+                      }}
+                      disabled={isClicked && isOther}
+                    >
+                      {c.text}
+                    </button>
+                  );
+                })}
               </div>
             </div>
+
             {quizNum !== null && ansList.length > quizNum && (
+              <div>
+                <div className={styles.expCard}>
+                  <div>解説</div>
+                  <div className={styles.qDetail}>{nowQuiz.explanation}</div>
+                </div>
+              </div>
+            )}
+
+            {/* {quizNum !== null && ansList.length > quizNum && (
               <div>
                 <div>
                   {ansList.slice(-1)[0].choiceCorrect ? "正解" : "不正解"}
@@ -157,10 +233,11 @@ export const Start = ({ category, userId, roomData }: Room) => {
                 </div>
                 <div>相手のポイント：{oppPoint}</div>
               </div>
-            )}
+            )} */}
+
             {ansList.length > quizNum && oppAnsList.length > quizNum && (
-              <div>
-                <button onClick={changeQuiz}>
+              <div className={styles.nextBtnContainer}>
+                <button onClick={changeQuiz} className={styles.nextBtn}>
                   {!preGameSet ? "次の問題へ" : "リザルト画面へ"}
                 </button>
               </div>
